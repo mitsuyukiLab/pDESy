@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tests.model.test_project &mdash; pDESy 0.3.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pDESy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pDESy.html">pDESy package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pDESy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>tests.model.test_project</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for tests.model.test_project</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.project</span> <span class="k">import</span> <span class="n">Project</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.component</span> <span class="k">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.task</span> <span class="k">import</span> <span class="n">Task</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.team</span> <span class="k">import</span> <span class="n">Team</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.worker</span> <span class="k">import</span> <span class="n">Worker</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.product</span> <span class="k">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.workflow</span> <span class="k">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.organization</span> <span class="k">import</span> <span class="n">Organization</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="k">import</span> <span class="n">BaseFactory</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_facility</span> <span class="k">import</span> <span class="n">BaseFacility</span>
+
+
+<div class="viewcode-block" id="dummy_project"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.dummy_project">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">dummy_project</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">):</span>
+    <span class="c1"># Components in Product</span>
+    <span class="n">c3</span> <span class="o">=</span> <span class="n">Component</span><span class="p">(</span><span class="s2">&quot;c3&quot;</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">Component</span><span class="p">(</span><span class="s2">&quot;c1&quot;</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">Component</span><span class="p">(</span><span class="s2">&quot;c2&quot;</span><span class="p">)</span>
+    <span class="n">c3</span><span class="o">.</span><span class="n">extend_child_component_list</span><span class="p">([</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">])</span>
+
+    <span class="c1"># Tasks in Workflow</span>
+    <span class="n">task1_1</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;task1_1&quot;</span><span class="p">,</span> <span class="n">need_facility</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">task1_2</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;task1_2&quot;</span><span class="p">)</span>
+    <span class="n">task2_1</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;task2_1&quot;</span><span class="p">)</span>
+    <span class="n">task3</span> <span class="o">=</span> <span class="n">Task</span><span class="p">(</span><span class="s2">&quot;task3&quot;</span><span class="p">)</span>
+    <span class="n">task3</span><span class="o">.</span><span class="n">extend_input_task_list</span><span class="p">([</span><span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">])</span>
+    <span class="n">task1_2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1_1</span><span class="p">)</span>
+
+    <span class="n">c1</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">])</span>
+    <span class="n">c2</span><span class="o">.</span><span class="n">append_targeted_task</span><span class="p">(</span><span class="n">task2_1</span><span class="p">)</span>
+    <span class="n">c3</span><span class="o">.</span><span class="n">append_targeted_task</span><span class="p">(</span><span class="n">task3</span><span class="p">)</span>
+
+    <span class="c1"># Facilities in factory</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">BaseFacility</span><span class="p">(</span><span class="s2">&quot;f1&quot;</span><span class="p">)</span>
+    <span class="n">f1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">task1_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="c1"># factory.facility_list.append(f1)</span>
+
+    <span class="c1"># Factory in BaseOrganization</span>
+    <span class="n">factory</span> <span class="o">=</span> <span class="n">BaseFactory</span><span class="p">(</span><span class="s2">&quot;factory&quot;</span><span class="p">,</span> <span class="n">facility_list</span><span class="o">=</span><span class="p">[</span><span class="n">f1</span><span class="p">])</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
+
+    <span class="c1"># Teams in Organization</span>
+    <span class="n">team</span> <span class="o">=</span> <span class="n">Team</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
+    <span class="n">team</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
+
+    <span class="c1"># Workers in each Team</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">team_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">task1_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">task1_2</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">task2_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">task3</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">facility_skill_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">f1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span>
+
+    <span class="n">w2</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w2&quot;</span><span class="p">,</span> <span class="n">team_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">6.0</span><span class="p">)</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">task1_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">task1_2</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">task2_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">task3</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">facility_skill_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">f1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w2</span><span class="p">)</span>
+
+    <span class="c1"># Project including Product, Workflow and Organization</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span>
+        <span class="n">init_datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="p">([</span><span class="n">c3</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">])</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">Organization</span><span class="p">(</span><span class="n">team_list</span><span class="o">=</span><span class="p">[</span><span class="n">team</span><span class="p">],</span> <span class="n">factory_list</span><span class="o">=</span><span class="p">[</span><span class="n">factory</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">project</span></div>
+
+
+<div class="viewcode-block" id="test_init"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_init">[docs]</a><span class="k">def</span> <span class="nf">test_init</span><span class="p">():</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span>
+        <span class="n">init_datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;tests/sample_converted_from_pDES_by_utilities-online.json&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_initialize"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_initialize">[docs]</a><span class="k">def</span> <span class="nf">test_initialize</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">()</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">time</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="test_read_pDESy_web_json"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_read_pDESy_web_json">[docs]</a><span class="k">def</span> <span class="nf">test_read_pDESy_web_json</span><span class="p">():</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span>
+        <span class="n">init_datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">read_pDESy_web_json</span><span class="p">(</span><span class="s2">&quot;tests/sample_from_pDESy_web.json&quot;</span><span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_read_pDES_json"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_read_pDES_json">[docs]</a><span class="k">def</span> <span class="nf">test_read_pDES_json</span><span class="p">():</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span>
+        <span class="n">init_datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">read_pDES_json</span><span class="p">(</span><span class="s2">&quot;tests/sample_converted_from_pDES_by_utilities-online.json&quot;</span><span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_str"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_str">[docs]</a><span class="k">def</span> <span class="nf">test_str</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Project</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="test_is_business_time"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_is_business_time">[docs]</a><span class="k">def</span> <span class="nf">test_is_business_time</span><span class="p">():</span>
+    <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">init_datetime</span><span class="o">=</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">timedelta</span><span class="p">)</span>
+
+    <span class="c1"># 2020/4/1 8:00:00</span>
+    <span class="k">assert</span> <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2020/4/1 8:00:00</span>
+    <span class="k">assert</span> <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2020/4/4 8:00:00</span>
+    <span class="n">saturday_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span><span class="n">saturday_datetime</span><span class="p">,</span> <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">saturday_datetime</span><span class="p">,</span>
+            <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+            <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">is_business_time</span><span class="p">(</span>
+            <span class="n">saturday_datetime</span><span class="p">,</span>
+            <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+            <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="ow">is</span> <span class="kc">False</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_create_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_create_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_gantt_plotly</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_get_networkx_graph"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_get_networkx_graph">[docs]</a><span class="k">def</span> <span class="nf">test_get_networkx_graph</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">get_networkx_graph</span><span class="p">()</span></div>
+    <span class="c1"># TODO</span>
+    <span class="c1"># assert...</span>
+
+
+<div class="viewcode-block" id="test_draw_networkx"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_draw_networkx">[docs]</a><span class="k">def</span> <span class="nf">test_draw_networkx</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_get_node_and_edge_trace_for_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_get_node_and_edge_trace_for_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_get_node_and_edge_trace_for_plotly_network</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">get_node_and_edge_trace_for_plotly_network</span><span class="p">()</span></div>
+    <span class="c1"># TODO</span>
+    <span class="c1"># assert...</span>
+
+
+<div class="viewcode-block" id="test_draw_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_draw_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_draw_plotly_network</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">draw_plotly_network</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_simulate"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_simulate">[docs]</a><span class="k">def</span> <span class="nf">test_simulate</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># mode=1 -&gt; Error (not yet implemented)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># mode=?? -&gt; Error</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;xxxx&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># time is over max_time</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test___perform_and_update_TaskPerformedBySingleTaskWorker"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test___perform_and_update_TaskPerformedBySingleTaskWorker">[docs]</a><span class="k">def</span> <span class="nf">test___perform_and_update_TaskPerformedBySingleTaskWorker</span><span class="p">():</span>
+    <span class="c1"># this method is tested in other test code..</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="test___is_allocated"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test___is_allocated">[docs]</a><span class="k">def</span> <span class="nf">test___is_allocated</span><span class="p">():</span>
+    <span class="c1"># this method is tested in other test code..</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="test___perform_and_update_TaskPerformedBySingleTaskWorkers"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test___perform_and_update_TaskPerformedBySingleTaskWorkers">[docs]</a><span class="k">def</span> <span class="nf">test___perform_and_update_TaskPerformedBySingleTaskWorkers</span><span class="p">():</span>
+    <span class="c1"># this method is tested in other test code..</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taiga MITSUYUKI
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

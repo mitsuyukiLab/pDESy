@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pDESy.model.project &mdash; pDESy 0.3.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> pDESy
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../pDESy.html">pDESy package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pDESy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pDESy.model.project</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pDESy.model.project</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">.base_project</span> <span class="k">import</span> <span class="n">BaseProject</span>
+<span class="kn">from</span> <span class="nn">.component</span> <span class="k">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">.task</span> <span class="k">import</span> <span class="n">Task</span>
+<span class="kn">from</span> <span class="nn">.worker</span> <span class="k">import</span> <span class="n">Worker</span>
+<span class="kn">from</span> <span class="nn">.team</span> <span class="k">import</span> <span class="n">Team</span>
+<span class="kn">from</span> <span class="nn">.product</span> <span class="k">import</span> <span class="n">Product</span>
+<span class="kn">from</span> <span class="nn">.workflow</span> <span class="k">import</span> <span class="n">Workflow</span>
+<span class="kn">from</span> <span class="nn">.organization</span> <span class="k">import</span> <span class="n">Organization</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">BaseProject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Project</span>
+<span class="sd">    Project class for expressing target project</span>
+<span class="sd">    including product, organization and workflow.</span>
+<span class="sd">    This class is implemented from BaseProject.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file_path (str, optional):</span>
+<span class="sd">            File path of this project data for reading.</span>
+<span class="sd">            Defaults to None. (New Project)</span>
+<span class="sd">        init_datetime (datetime.datetime, optional):</span>
+<span class="sd">            Start datetime of project.</span>
+<span class="sd">            Defaults to None -&gt; datetime.datetime.now().</span>
+<span class="sd">        unit_timedelta (datetime.timedelta, optional):</span>
+<span class="sd">            Unit time of simulation.</span>
+<span class="sd">            Defaults to None -&gt; datetime.timedelta(minutes=1).</span>
+<span class="sd">        product (BaseProduct, optional):</span>
+<span class="sd">            BaseProduct in this project.</span>
+<span class="sd">            Defaults to None. (New Project)</span>
+<span class="sd">        organization (BaseOrganization, optional):</span>
+<span class="sd">            BaseOrganization in this project.</span>
+<span class="sd">            Defaults to None. (New Project)</span>
+<span class="sd">        workflow (BaseWorkflow, optional):</span>
+<span class="sd">            BaseWorkflow in this project.</span>
+<span class="sd">            Defaults to None. (New Project)</span>
+<span class="sd">        time (int, optional):</span>
+<span class="sd">            Simulation time executing this method.</span>
+<span class="sd">            Defaults to 0.</span>
+<span class="sd">        cost_list (List[float], optional):</span>
+<span class="sd">            Basic variable.</span>
+<span class="sd">            History or record of this project&#39;s cost in simulation.</span>
+<span class="sd">            Defaults to None -&gt; [].</span>
+<span class="sd">        encoding (str, optional)</span>
+<span class="sd">            encoding for reading json file.</span>
+<span class="sd">            Default to None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># Basic parameters</span>
+        <span class="n">init_datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">unit_timedelta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># Basic variables</span>
+        <span class="n">product</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">organization</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">workflow</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">cost_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># For this class</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">file_path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+            <span class="n">init_datetime</span><span class="o">=</span><span class="n">init_datetime</span><span class="p">,</span>
+            <span class="n">unit_timedelta</span><span class="o">=</span><span class="n">unit_timedelta</span><span class="p">,</span>
+            <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span>
+            <span class="n">organization</span><span class="o">=</span><span class="n">organization</span><span class="p">,</span>
+            <span class="n">workflow</span><span class="o">=</span><span class="n">workflow</span><span class="p">,</span>
+            <span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span>
+            <span class="n">cost_list</span><span class="o">=</span><span class="n">cost_list</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_pDES_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Project.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Project.simulate"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">error_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
+        <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">work_start_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">work_finish_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+            <span class="n">task_performed_mode</span><span class="o">=</span><span class="n">task_performed_mode</span><span class="p">,</span>
+            <span class="n">error_tol</span><span class="o">=</span><span class="n">error_tol</span><span class="p">,</span>
+            <span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span>
+            <span class="n">weekend_working</span><span class="o">=</span><span class="n">weekend_working</span><span class="p">,</span>
+            <span class="n">work_start_hour</span><span class="o">=</span><span class="n">work_start_hour</span><span class="p">,</span>
+            <span class="n">work_finish_hour</span><span class="o">=</span><span class="n">work_finish_hour</span><span class="p">,</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="n">max_time</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.read_pDESy_web_json"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.read_pDESy_web_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_pDESy_web_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @override from BaseProject</span>
+<span class="sd">        Add the code of reading advanced parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str):</span>
+<span class="sd">                file path by getting pDESy.org</span>
+<span class="sd">            encoding ([type], optional):</span>
+<span class="sd">                Defaults to None -&gt; utf-8.</span>
+<span class="sd">        TODO:</span>
+<span class="sd">            pDESy.org for describing project in web browser should be developed...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;utf-8&quot;</span>
+        <span class="n">pdes_json</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pdes_json</span><span class="p">)</span>
+
+        <span class="c1"># Get Product information including Components without dependency</span>
+        <span class="n">cd_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Component&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="n">component_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Component</span><span class="p">(</span>
+                <span class="n">cd</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">ID</span><span class="o">=</span><span class="n">cd</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">error_tolerance</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">cd</span><span class="p">[</span><span class="s2">&quot;userData&quot;</span><span class="p">][</span><span class="s2">&quot;errorTolerance&quot;</span><span class="p">]),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">cd_list</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Get Workflow information including Tasks without dependency</span>
+        <span class="n">td_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="n">task_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Task</span><span class="p">(</span>
+                <span class="n">td</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                <span class="n">ID</span><span class="o">=</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">default_work_amount</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;userData&quot;</span><span class="p">][</span><span class="s2">&quot;workAmount&quot;</span><span class="p">]),</span>
+                <span class="n">default_progress</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;userData&quot;</span><span class="p">][</span><span class="s2">&quot;progress&quot;</span><span class="p">]),</span>
+                <span class="n">additional_work_amount</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;userData&quot;</span><span class="p">][</span><span class="s2">&quot;additionalWorkAmount&quot;</span><span class="p">]),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">td_list</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Get Organization information including Teams without dependency</span>
+        <span class="n">team_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ted_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Team&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">team_data</span> <span class="ow">in</span> <span class="n">ted_list</span><span class="p">:</span>
+            <span class="n">worker_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">worker_list_data</span> <span class="o">=</span> <span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;userData&quot;</span><span class="p">][</span><span class="s2">&quot;WorkerList&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]]</span>
+            <span class="k">for</span> <span class="n">worker_data</span> <span class="ow">in</span> <span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]:</span>
+                <span class="n">work_amount_skill_mean_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">work_amount_skill_sd_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">quality_skill_mean_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">quality_skill_sd_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">if</span> <span class="s2">&quot;WorkAmountSkill&quot;</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">skill_data</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">]:</span>
+                            <span class="n">work_amount_skill_mean_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="n">work_amount_skill_sd_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                        <span class="n">work_amount_skill_mean_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value&quot;</span><span class="p">])</span>
+                        <span class="n">work_amount_skill_sd_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="s2">&quot;QualitySkill&quot;</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">skill_data</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">]:</span>
+                            <span class="n">quality_skill_mean_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="n">quality_skill_sd_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                        <span class="n">quality_skill_mean_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value&quot;</span><span class="p">])</span>
+                        <span class="n">quality_skill_sd_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">])</span>
+                <span class="n">worker_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">Worker</span><span class="p">(</span>
+                        <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span>
+                        <span class="n">team_id</span><span class="o">=</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                        <span class="n">cost_per_time</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;Cost&quot;</span><span class="p">]),</span>
+                        <span class="n">workamount_skill_mean_map</span><span class="o">=</span><span class="n">work_amount_skill_mean_info</span><span class="p">,</span>
+                        <span class="n">workamount_skill_sd_map</span><span class="o">=</span><span class="n">work_amount_skill_sd_info</span><span class="p">,</span>
+                        <span class="n">quality_skill_mean_map</span><span class="o">=</span><span class="n">quality_skill_mean_info</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">team_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">Team</span><span class="p">(</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">ID</span><span class="o">=</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">worker_list</span><span class="o">=</span><span class="n">worker_list</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Get Links information including</span>
+        <span class="c1"># ComponentLink, TaskLink, TeamLink(yet), TargetComponentLink, AllocationLink</span>
+        <span class="n">l_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;draw2d.Connection&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">l_list</span><span class="p">:</span>
+            <span class="n">org_id</span> <span class="o">=</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">][</span><span class="s2">&quot;node&quot;</span><span class="p">]</span>
+            <span class="n">org_type</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">data</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+            <span class="n">dst_id</span> <span class="o">=</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">][</span><span class="s2">&quot;node&quot;</span><span class="p">]</span>
+            <span class="n">dst_type</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">data</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">org_type</span> <span class="o">==</span> <span class="s2">&quot;Component&quot;</span> <span class="ow">and</span> <span class="n">dst_type</span> <span class="o">==</span> <span class="s2">&quot;Component&quot;</span><span class="p">:</span>
+                <span class="n">org_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_c</span><span class="o">.</span><span class="n">parent_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_c</span><span class="p">)</span>
+                <span class="n">dst_c</span><span class="o">.</span><span class="n">child_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">org_c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">org_type</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span> <span class="ow">and</span> <span class="n">dst_type</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span><span class="p">:</span>
+                <span class="n">org_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># org_task.output_task_list.append(dst_task)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">org_task</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">org_type</span> <span class="o">==</span> <span class="s2">&quot;Team&quot;</span> <span class="ow">and</span> <span class="n">dst_type</span> <span class="o">==</span> <span class="s2">&quot;Team&quot;</span><span class="p">:</span>
+                <span class="n">org_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># org_task.output_task_id_list.append(dst_task.ID)</span>
+                <span class="n">dst_team</span><span class="o">.</span><span class="n">parent_team_id</span> <span class="o">=</span> <span class="n">org_team</span><span class="o">.</span><span class="n">ID</span>
+            <span class="k">elif</span> <span class="n">org_type</span> <span class="o">==</span> <span class="s2">&quot;Component&quot;</span> <span class="ow">and</span> <span class="n">dst_type</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span><span class="p">:</span>
+                <span class="n">org_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_c</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_task</span><span class="p">)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">target_component</span> <span class="o">=</span> <span class="n">org_c</span>
+            <span class="k">elif</span> <span class="n">org_type</span> <span class="o">==</span> <span class="s2">&quot;Team&quot;</span> <span class="ow">and</span> <span class="n">dst_type</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span><span class="p">:</span>
+                <span class="n">org_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">org_id</span><span class="p">,</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">dst_id</span><span class="p">,</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_team</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_task</span><span class="p">)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">allocated_team_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">org_team</span><span class="p">)</span>
+
+        <span class="c1"># Aggregate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">component_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">task_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">Organization</span><span class="p">(</span><span class="n">team_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.read_pDES_json"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.read_pDES_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_pDES_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @override from BaseProject</span>
+<span class="sd">        Add the code of reading advanced parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str):</span>
+<span class="sd">                file path by getting pDES and converted to json</span>
+<span class="sd">            encoding ([type], optional):</span>
+<span class="sd">                Defaults to None -&gt; utf-8.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">encoding</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;utf-8&quot;</span>
+        <span class="n">pdes_json</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pdes_json</span><span class="p">)</span>
+
+        <span class="c1"># Get Product information including Components without dependency</span>
+        <span class="n">cd_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ProjectDiagram&quot;</span><span class="p">][</span><span class="s2">&quot;NodeElementList&quot;</span><span class="p">][</span><span class="s2">&quot;ComponentNode&quot;</span><span class="p">]</span>
+        <span class="n">component_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Component</span><span class="p">(</span>
+                <span class="n">cd</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span> <span class="n">ID</span><span class="o">=</span><span class="n">cd</span><span class="p">[</span><span class="s2">&quot;-id&quot;</span><span class="p">],</span> <span class="n">error_tolerance</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">cd</span><span class="p">[</span><span class="s2">&quot;ErrorTolerance&quot;</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">cd</span> <span class="ow">in</span> <span class="n">cd_list</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Get Workflow information including Tasks without dependency</span>
+        <span class="n">td_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ProjectDiagram&quot;</span><span class="p">][</span><span class="s2">&quot;NodeElementList&quot;</span><span class="p">][</span><span class="s2">&quot;TaskNode&quot;</span><span class="p">]</span>
+        <span class="n">task_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Task</span><span class="p">(</span>
+                <span class="n">td</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span>
+                <span class="n">ID</span><span class="o">=</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;-id&quot;</span><span class="p">],</span>
+                <span class="n">default_work_amount</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;WorkAmount&quot;</span><span class="p">]),</span>
+                <span class="n">default_progress</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;Progress&quot;</span><span class="p">]),</span>
+                <span class="n">additional_work_amount</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">td</span><span class="p">[</span><span class="s2">&quot;AdditionalWorkAmount&quot;</span><span class="p">]),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">td</span> <span class="ow">in</span> <span class="n">td_list</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Get Organization information including Teams without dependency</span>
+        <span class="n">team_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ted_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ProjectDiagram&quot;</span><span class="p">][</span><span class="s2">&quot;NodeElementList&quot;</span><span class="p">][</span><span class="s2">&quot;TeamNode&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">team_data</span> <span class="ow">in</span> <span class="n">ted_list</span><span class="p">:</span>
+            <span class="n">worker_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">worker_list_data</span> <span class="o">=</span> <span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;WorkerList&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]]</span>
+            <span class="k">for</span> <span class="n">worker_data</span> <span class="ow">in</span> <span class="n">worker_list_data</span><span class="p">[</span><span class="s2">&quot;Worker&quot;</span><span class="p">]:</span>
+                <span class="n">work_amount_skill_mean_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">work_amount_skill_sd_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">quality_skill_mean_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">quality_skill_sd_info</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">if</span> <span class="s2">&quot;WorkAmountSkill&quot;</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">skill_data</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">]:</span>
+                            <span class="n">work_amount_skill_mean_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="n">work_amount_skill_sd_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                        <span class="n">work_amount_skill_mean_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value&quot;</span><span class="p">])</span>
+                        <span class="n">work_amount_skill_sd_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;WorkAmountSkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="s2">&quot;QualitySkill&quot;</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">skill_data</span> <span class="ow">in</span> <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">]:</span>
+                            <span class="n">quality_skill_mean_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                            <span class="n">quality_skill_sd_info</span><span class="p">[</span><span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                                <span class="n">skill_data</span><span class="p">[</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">]</span>
+                            <span class="p">)</span>
+                    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                        <span class="n">quality_skill_mean_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value&quot;</span><span class="p">])</span>
+                        <span class="n">quality_skill_sd_info</span><span class="p">[</span>
+                            <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-name&quot;</span><span class="p">]</span>
+                        <span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;QualitySkill&quot;</span><span class="p">][</span><span class="s2">&quot;-value_sd&quot;</span><span class="p">])</span>
+                <span class="n">worker_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">Worker</span><span class="p">(</span>
+                        <span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span>
+                        <span class="n">team_id</span><span class="o">=</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;-id&quot;</span><span class="p">],</span>
+                        <span class="n">cost_per_time</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">worker_data</span><span class="p">[</span><span class="s2">&quot;Cost&quot;</span><span class="p">]),</span>
+                        <span class="n">workamount_skill_mean_map</span><span class="o">=</span><span class="n">work_amount_skill_mean_info</span><span class="p">,</span>
+                        <span class="n">workamount_skill_sd_map</span><span class="o">=</span><span class="n">work_amount_skill_sd_info</span><span class="p">,</span>
+                        <span class="n">quality_skill_mean_map</span><span class="o">=</span><span class="n">quality_skill_mean_info</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">team_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">Team</span><span class="p">(</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">],</span> <span class="n">ID</span><span class="o">=</span><span class="n">team_data</span><span class="p">[</span><span class="s2">&quot;-id&quot;</span><span class="p">],</span> <span class="n">worker_list</span><span class="o">=</span><span class="n">worker_list</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">Organization</span><span class="p">(</span><span class="n">team_list</span><span class="p">)</span>
+
+        <span class="c1"># Get Links information including</span>
+        <span class="c1"># ComponentLink, TaskLink, TeamLink(yet), TargetComponentLink, AllocationLink</span>
+        <span class="n">l_list</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ProjectDiagram&quot;</span><span class="p">][</span><span class="s2">&quot;LinkList&quot;</span><span class="p">][</span><span class="s2">&quot;Link&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">l_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ComponentLink&quot;</span><span class="p">:</span>
+                <span class="n">org_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-org&quot;</span><span class="p">],</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-dst&quot;</span><span class="p">],</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_c</span><span class="o">.</span><span class="n">parent_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_c</span><span class="p">)</span>
+                <span class="n">dst_c</span><span class="o">.</span><span class="n">child_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">org_c</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TaskLink&quot;</span><span class="p">:</span>
+                <span class="n">org_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-org&quot;</span><span class="p">],</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-dst&quot;</span><span class="p">],</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># org_task.output_task_list.append(dst_task)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">org_task</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TeamLink&quot;</span><span class="p">:</span>
+                <span class="n">org_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-org&quot;</span><span class="p">],</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-dst&quot;</span><span class="p">],</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># org_task.output_task_id_list.append(dst_task.ID)</span>
+                <span class="n">dst_team</span><span class="o">.</span><span class="n">get_work_amount_skill_progress_team_id</span> <span class="o">=</span> <span class="n">org_team</span><span class="o">.</span><span class="n">ID</span>
+            <span class="k">elif</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;TargetComponentLink&quot;</span><span class="p">:</span>
+                <span class="n">org_c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-org&quot;</span><span class="p">],</span> <span class="n">component_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-dst&quot;</span><span class="p">],</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_c</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_task</span><span class="p">)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">target_component</span> <span class="o">=</span> <span class="n">org_c</span>
+            <span class="k">elif</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;AllocationLink&quot;</span><span class="p">:</span>
+                <span class="n">org_team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-org&quot;</span><span class="p">],</span> <span class="n">team_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dst_task</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;-dst&quot;</span><span class="p">],</span> <span class="n">task_list</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">org_team</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst_task</span><span class="p">)</span>
+                <span class="n">dst_task</span><span class="o">.</span><span class="n">allocated_team_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">org_team</span><span class="p">)</span>
+
+        <span class="c1"># Aggregate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">component_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">Workflow</span><span class="p">(</span><span class="n">task_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">Organization</span><span class="p">(</span><span class="n">team_list</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Taiga MITSUYUKI
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
