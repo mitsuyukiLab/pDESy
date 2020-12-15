@@ -928,13 +928,18 @@ Defaults to 1e-10.</li>
 
 <dl class="method">
 <dt id="pDESy.model.base_factory.BaseFactory.set_placed_component">
-<code class="descname">set_placed_component</code><span class="sig-paren">(</span><em>placed_component</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_factory.html#BaseFactory.set_placed_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_factory.BaseFactory.set_placed_component" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_placed_component</code><span class="sig-paren">(</span><em>placed_component</em>, <em>set_to_all_children_components=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_factory.html#BaseFactory.set_placed_component"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_factory.BaseFactory.set_placed_component" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the placed_factory</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>placed_component</strong> (<a class="reference internal" href="#pDESy.model.base_component.BaseComponent" title="pDESy.model.base_component.BaseComponent"><em>BaseComponent</em></a>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>placed_component</strong> (<a class="reference internal" href="#pDESy.model.base_component.BaseComponent" title="pDESy.model.base_component.BaseComponent"><em>BaseComponent</em></a>) – Component which places to this factory</li>
+<li><strong>set_to_all_children_components</strong> (<em>bool</em>) – If True, set placed_factory to all children components
+Default to True</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

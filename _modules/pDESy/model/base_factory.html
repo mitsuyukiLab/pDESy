@@ -344,14 +344,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targeted_task</span><span class="p">)</span>
         <span class="n">targeted_task</span><span class="o">.</span><span class="n">allocated_factory_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BaseFactory.set_placed_component"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.set_placed_component">[docs]</a>    <span class="k">def</span> <span class="nf">set_placed_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">placed_component</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFactory.set_placed_component"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.set_placed_component">[docs]</a>    <span class="k">def</span> <span class="nf">set_placed_component</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">placed_component</span><span class="p">,</span> <span class="n">set_to_all_children_components</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the placed_factory</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            placed_component (BaseComponent):</span>
+<span class="sd">                Component which places to this factory</span>
+<span class="sd">            set_to_all_children_components (bool):</span>
+<span class="sd">                If True, set placed_factory to all children components</span>
+<span class="sd">                Default to True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">placed_component</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">placed_component</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">set_to_all_children_components</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child_c</span> <span class="ow">in</span> <span class="n">placed_component</span><span class="o">.</span><span class="n">child_component_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_placed_component</span><span class="p">(</span>
+                    <span class="n">child_c</span><span class="p">,</span>
+                    <span class="n">set_to_all_children_components</span><span class="o">=</span><span class="n">set_to_all_children_components</span><span class="p">,</span>
+                <span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseFactory.remove_placed_component"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.remove_placed_component">[docs]</a>    <span class="k">def</span> <span class="nf">remove_placed_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">placed_component</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">placed_component</span><span class="p">)</span></div>
