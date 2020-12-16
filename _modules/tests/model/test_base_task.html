@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_base_task &mdash; pDESy 0.3.1 documentation</title>
+  <title>tests.model.test_base_task &mdash; pDESy 0.3.2 documentation</title>
   
 
   
@@ -173,6 +173,8 @@
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">allocated_team_list</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">target_component</span> <span class="ow">is</span> <span class="kc">None</span>
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">default_progress</span> <span class="o">==</span> <span class="mf">0.0</span>
+    <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">fixing_allocating_worker_id_list</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">fixing_allocating_facility_id_list</span> <span class="ow">is</span> <span class="kc">None</span>
     <span class="c1"># assert task.additional_work_amount == 0.0</span>
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">est</span> <span class="o">==</span> <span class="mf">0.0</span>
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">eft</span> <span class="o">==</span> <span class="mf">0.0</span>
@@ -198,11 +200,15 @@
         <span class="n">ready_time_list</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
         <span class="n">start_time_list</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
         <span class="n">finish_time_list</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+        <span class="n">fixing_allocating_worker_id_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;aaa&quot;</span><span class="p">,</span> <span class="s2">&quot;bbb&quot;</span><span class="p">],</span>
+        <span class="n">fixing_allocating_facility_id_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ccc&quot;</span><span class="p">,</span> <span class="s2">&quot;ddd&quot;</span><span class="p">],</span>
         <span class="n">allocated_worker_list</span><span class="o">=</span><span class="p">[</span><span class="n">BaseWorker</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)],</span>
         <span class="n">allocated_worker_id_record</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;idid&quot;</span><span class="p">]],</span>
         <span class="n">allocated_facility_list</span><span class="o">=</span><span class="p">[</span><span class="n">BaseFacility</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">)],</span>
         <span class="n">allocated_facility_id_record</span><span class="o">=</span><span class="p">[[</span><span class="s2">&quot;ibib&quot;</span><span class="p">]],</span>
     <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">tb</span><span class="o">.</span><span class="n">fixing_allocating_worker_id_list</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;aaa&quot;</span><span class="p">,</span> <span class="s2">&quot;bbb&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">tb</span><span class="o">.</span><span class="n">fixing_allocating_facility_id_list</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;ccc&quot;</span><span class="p">,</span> <span class="s2">&quot;ddd&quot;</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">tb</span><span class="o">.</span><span class="n">remaining_work_amount</span> <span class="o">==</span> <span class="mf">0.0</span>
     <span class="k">assert</span> <span class="n">tb</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span>
     <span class="k">assert</span> <span class="n">tb</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -406,7 +412,22 @@
     <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">(</span><span class="n">worker</span><span class="o">=</span><span class="n">w1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span>
 
-    <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span></div>
+    <span class="k">assert</span> <span class="n">task</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span>
+
+    <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span>
+        <span class="s2">&quot;task&quot;</span><span class="p">,</span>
+        <span class="n">fixing_allocating_worker_id_list</span><span class="o">=</span><span class="p">[</span><span class="n">w1</span><span class="o">.</span><span class="n">ID</span><span class="p">],</span>
+        <span class="n">fixing_allocating_facility_id_list</span><span class="o">=</span><span class="p">[</span><span class="n">f1</span><span class="o">.</span><span class="n">ID</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="n">f1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="n">f2</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+    <span class="k">assert</span> <span class="n">task2</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">(</span><span class="n">worker</span><span class="o">=</span><span class="n">w1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">task2</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">(</span><span class="n">worker</span><span class="o">=</span><span class="n">w2</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span>
+    <span class="k">assert</span> <span class="n">task2</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">(</span><span class="n">worker</span><span class="o">=</span><span class="n">w1</span><span class="p">,</span> <span class="n">facility</span><span class="o">=</span><span class="n">f1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">task2</span><span class="o">.</span><span class="n">can_add_resources</span><span class="p">(</span><span class="n">worker</span><span class="o">=</span><span class="n">w1</span><span class="p">,</span> <span class="n">facility</span><span class="o">=</span><span class="n">f2</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span></div>
 </pre></div>
 
            </div>

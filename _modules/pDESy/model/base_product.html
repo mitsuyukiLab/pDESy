@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.base_product &mdash; pDESy 0.3.1 documentation</title>
+  <title>pDESy.model.base_product &mdash; pDESy 0.3.2 documentation</title>
   
 
   
@@ -210,7 +210,7 @@
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_list</span><span class="p">:</span>
             <span class="n">c</span><span class="o">.</span><span class="n">record_placed_factory_id</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="BaseProduct.check_removing_placed_factory"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_product.BaseProduct.check_removing_placed_factory">[docs]</a>    <span class="k">def</span> <span class="nf">check_removing_placed_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseProduct.check_removing_placed_factory"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_product.BaseProduct.check_removing_placed_factory">[docs]</a>    <span class="k">def</span> <span class="nf">check_removing_placed_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check removing this product from placed_factory or not.</span>
 <span class="sd">        If all tasks of this product is finished, this product will be removed automatically.</span>
@@ -231,12 +231,13 @@
                 <span class="n">removing_placed_factory_component</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">removing_placed_factory_component</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s2">&quot;REMOVE &quot;</span><span class="p">,</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="s2">&quot; from &quot;</span><span class="p">,</span>
-                <span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;REMOVE &quot;</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">&quot; from &quot;</span><span class="p">,</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span><span class="o">.</span><span class="n">remove_placed_component</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
             <span class="n">c</span><span class="o">.</span><span class="n">set_placed_factory</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
 

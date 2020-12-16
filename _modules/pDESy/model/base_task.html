@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.base_task &mdash; pDESy 0.3.1 documentation</title>
+  <title>pDESy.model.base_task &mdash; pDESy 0.3.2 documentation</title>
   
 
   
@@ -228,6 +228,14 @@
 <span class="sd">            If True, this task is performed automatically</span>
 <span class="sd">            even if there are no allocated workers.</span>
 <span class="sd">            Default to False.</span>
+<span class="sd">        fixing_allocating_worker_id_list (List[str], optional):</span>
+<span class="sd">            Basic parameter.</span>
+<span class="sd">            Allocating worker ID list for fixing allocation in simulation.</span>
+<span class="sd">            Defaults to None.</span>
+<span class="sd">        fixing_allocating_facility_id_list (List[str], optional):</span>
+<span class="sd">            Basic parameter.</span>
+<span class="sd">            Allocating facility ID list for fixing allocation in simulation.</span>
+<span class="sd">            Defaults to None.</span>
 <span class="sd">        est (float, optional):</span>
 <span class="sd">            Basic variable.</span>
 <span class="sd">            Earliest start time of CPM. This will be updated step by step.</span>
@@ -297,6 +305,8 @@
         <span class="n">default_progress</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">due_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">auto_task</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">fixing_allocating_worker_id_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">fixing_allocating_facility_id_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="c1"># Basic variables</span>
         <span class="n">est</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
         <span class="n">eft</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
@@ -339,6 +349,16 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">due_time</span> <span class="o">=</span> <span class="n">due_time</span> <span class="k">if</span> <span class="n">due_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">auto_task</span> <span class="o">=</span> <span class="n">auto_task</span> <span class="k">if</span> <span class="n">auto_task</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_worker_id_list</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">fixing_allocating_worker_id_list</span>
+            <span class="k">if</span> <span class="n">fixing_allocating_worker_id_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_facility_id_list</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">fixing_allocating_facility_id_list</span>
+            <span class="k">if</span> <span class="n">fixing_allocating_facility_id_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
         <span class="c1"># ----</span>
         <span class="c1"># Changeable variable on simulation</span>
         <span class="c1"># --</span>
@@ -571,6 +591,16 @@
         <span class="k">if</span> <span class="n">facility</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">facility</span><span class="o">.</span><span class="n">solo_working</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">allocated_facility_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Fixing allocating worker/facility id list check</span>
+        <span class="k">if</span> <span class="n">worker</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_worker_id_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">worker</span><span class="o">.</span><span class="n">ID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_worker_id_list</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">facility</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_facility_id_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">facility</span><span class="o">.</span><span class="n">ID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixing_allocating_facility_id_list</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">False</span>
 
         <span class="c1"># skill check</span>

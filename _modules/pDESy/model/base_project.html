@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.base_project &mdash; pDESy 0.3.1 documentation</title>
+  <title>pDESy.model.base_project &mdash; pDESy 0.3.2 documentation</title>
   
 
   
@@ -657,7 +657,7 @@
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;UPDATE&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_removing_placed_factory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_removing_placed_factory</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">update_PERT_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 

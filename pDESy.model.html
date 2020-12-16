@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model package &mdash; pDESy 0.3.1 documentation</title>
+  <title>pDESy.model package &mdash; pDESy 0.3.2 documentation</title>
   
 
   
@@ -1385,7 +1385,7 @@ This class will be used as template.</p>
 </table>
 <dl class="method">
 <dt id="pDESy.model.base_product.BaseProduct.check_removing_placed_factory">
-<code class="descname">check_removing_placed_factory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_product.html#BaseProduct.check_removing_placed_factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_product.BaseProduct.check_removing_placed_factory" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_removing_placed_factory</code><span class="sig-paren">(</span><em>print_debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_product.html#BaseProduct.check_removing_placed_factory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_product.BaseProduct.check_removing_placed_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check removing this product from placed_factory or not.
 If all tasks of this product is finished, this product will be removed automatically.</p>
 </dd></dl>
@@ -2198,7 +2198,7 @@ Use BaseWorkerState or BaseFacilityState as instead.</p>
 <span id="pdesy-model-base-task-module"></span><h2>pDESy.model.base_task module<a class="headerlink" href="#module-pDESy.model.base_task" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pDESy.model.base_task.BaseTask">
-<em class="property">class </em><code class="descclassname">pDESy.model.base_task.</code><code class="descname">BaseTask</code><span class="sig-paren">(</span><em>name: str</em>, <em>ID=None</em>, <em>default_work_amount=None</em>, <em>input_task_list=None</em>, <em>output_task_list=None</em>, <em>allocated_team_list=None</em>, <em>allocated_factory_list=None</em>, <em>need_facility=False</em>, <em>target_component=None</em>, <em>default_progress=None</em>, <em>due_time=None</em>, <em>auto_task=False</em>, <em>est=0.0</em>, <em>eft=0.0</em>, <em>lst=-1.0</em>, <em>lft=-1.0</em>, <em>remaining_work_amount=None</em>, <em>state=&lt;BaseTaskState.NONE: 0&gt;</em>, <em>ready_time_list=None</em>, <em>start_time_list=None</em>, <em>finish_time_list=None</em>, <em>allocated_worker_list=None</em>, <em>allocated_worker_id_record=None</em>, <em>allocated_facility_list=None</em>, <em>allocated_facility_id_record=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_task.html#BaseTask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_task.BaseTask" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pDESy.model.base_task.</code><code class="descname">BaseTask</code><span class="sig-paren">(</span><em>name: str</em>, <em>ID=None</em>, <em>default_work_amount=None</em>, <em>input_task_list=None</em>, <em>output_task_list=None</em>, <em>allocated_team_list=None</em>, <em>allocated_factory_list=None</em>, <em>need_facility=False</em>, <em>target_component=None</em>, <em>default_progress=None</em>, <em>due_time=None</em>, <em>auto_task=False</em>, <em>fixing_allocating_worker_id_list=None</em>, <em>fixing_allocating_facility_id_list=None</em>, <em>est=0.0</em>, <em>eft=0.0</em>, <em>lst=-1.0</em>, <em>lft=-1.0</em>, <em>remaining_work_amount=None</em>, <em>state=&lt;BaseTaskState.NONE: 0&gt;</em>, <em>ready_time_list=None</em>, <em>start_time_list=None</em>, <em>finish_time_list=None</em>, <em>allocated_worker_list=None</em>, <em>allocated_worker_id_record=None</em>, <em>allocated_facility_list=None</em>, <em>allocated_facility_id_record=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pDESy/model/base_task.html#BaseTask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pDESy.model.base_task.BaseTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>BaseTask class for expressing target workflow.
 This class will be used as template.</p>
@@ -2242,6 +2242,12 @@ Defaults to None -&gt; int(-1).</li>
 If True, this task is performed automatically
 even if there are no allocated workers.
 Default to False.</li>
+<li><strong>fixing_allocating_worker_id_list</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Basic parameter.
+Allocating worker ID list for fixing allocation in simulation.
+Defaults to None.</li>
+<li><strong>fixing_allocating_facility_id_list</strong> (<em>List</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Basic parameter.
+Allocating facility ID list for fixing allocation in simulation.
+Defaults to None.</li>
 <li><strong>est</strong> (<em>float</em><em>, </em><em>optional</em>) – Basic variable.
 Earliest start time of CPM. This will be updated step by step.
 Defaults to 0.0.</li>
