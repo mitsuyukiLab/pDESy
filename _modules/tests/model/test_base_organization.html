@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -26,10 +26,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -154,12 +154,12 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">from</span> <span class="nn">pDESy.model.base_team</span> <span class="k">import</span> <span class="n">BaseTeam</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="k">import</span> <span class="n">BaseFactory</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_organization</span> <span class="k">import</span> <span class="n">BaseOrganization</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_worker</span> <span class="k">import</span> <span class="n">BaseWorker</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_facility</span> <span class="k">import</span> <span class="n">BaseFacility</span><span class="p">,</span> <span class="n">BaseFacilityState</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_resource</span> <span class="k">import</span> <span class="n">BaseResourceState</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_team</span> <span class="kn">import</span> <span class="n">BaseTeam</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="kn">import</span> <span class="n">BaseFactory</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_organization</span> <span class="kn">import</span> <span class="n">BaseOrganization</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_worker</span> <span class="kn">import</span> <span class="n">BaseWorker</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_facility</span> <span class="kn">import</span> <span class="n">BaseFacility</span><span class="p">,</span> <span class="n">BaseFacilityState</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_resource</span> <span class="kn">import</span> <span class="n">BaseResourceState</span>
 
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">pytest</span>
@@ -255,9 +255,11 @@
 
 
 <div class="viewcode-block" id="test_create_simple_gantt"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_create_simple_gantt">[docs]</a><span class="k">def</span> <span class="nf">test_create_simple_gantt</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
-    <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_simple_gantt</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_simple_gantt</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_create_data_for_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
@@ -317,11 +319,13 @@
 <div class="viewcode-block" id="test_create_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_create_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_gantt_plotly</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span>
-        <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_create_data_for_cost_history_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_create_data_for_cost_history_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_cost_history_plotly</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
@@ -344,11 +348,13 @@
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span>
-    <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span>
-        <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;bbbbbbb&quot;</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">dummy_organization</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;bbbbbbb&quot;</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_get_networkx_graph"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_get_networkx_graph">[docs]</a><span class="k">def</span> <span class="nf">test_get_networkx_graph</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
@@ -357,11 +363,13 @@
 
 
 <div class="viewcode-block" id="test_draw_networkx"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_draw_networkx">[docs]</a><span class="k">def</span> <span class="nf">test_draw_networkx</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
-    <span class="n">dummy_organization</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span>
-        <span class="n">view_workers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">view_facilities</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">dummy_organization</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span>
+            <span class="n">view_workers</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">view_facilities</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_get_node_and_edge_trace_for_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_get_node_and_edge_trace_for_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_get_node_and_edge_trace_for_plotly_network</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
@@ -400,9 +408,11 @@
 
 
 <div class="viewcode-block" id="test_draw_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_organization.test_draw_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_draw_plotly_network</span><span class="p">(</span><span class="n">dummy_organization</span><span class="p">):</span>
-    <span class="n">dummy_organization</span><span class="o">.</span><span class="n">draw_plotly_network</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">dummy_organization</span><span class="o">.</span><span class="n">draw_plotly_network</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

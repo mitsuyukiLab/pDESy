@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -26,10 +26,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -154,10 +154,10 @@
 <span></span><span class="ch">#!/usr/bin/python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">from</span> <span class="nn">pDESy.model.base_facility</span> <span class="k">import</span> <span class="n">BaseFacility</span><span class="p">,</span> <span class="n">BaseFacilityState</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="k">import</span> <span class="n">BaseFactory</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_component</span> <span class="k">import</span> <span class="n">BaseComponent</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_task</span> <span class="k">import</span> <span class="n">BaseTask</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_facility</span> <span class="kn">import</span> <span class="n">BaseFacility</span><span class="p">,</span> <span class="n">BaseFacilityState</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="kn">import</span> <span class="n">BaseFactory</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_component</span> <span class="kn">import</span> <span class="n">BaseComponent</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_task</span> <span class="kn">import</span> <span class="n">BaseTask</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -211,9 +211,13 @@
 
 <div class="viewcode-block" id="test_remove_placed_component"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_factory.test_remove_placed_component">[docs]</a><span class="k">def</span> <span class="nf">test_remove_placed_component</span><span class="p">():</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">BaseComponent</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="n">BaseComponent</span><span class="p">(</span><span class="s2">&quot;c1&quot;</span><span class="p">)</span>
+    <span class="n">c2</span> <span class="o">=</span> <span class="n">BaseComponent</span><span class="p">(</span><span class="s2">&quot;c2&quot;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">append_child_component</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+    <span class="n">c1</span><span class="o">.</span><span class="n">append_child_component</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
     <span class="n">factory</span> <span class="o">=</span> <span class="n">BaseFactory</span><span class="p">(</span><span class="s2">&quot;factory&quot;</span><span class="p">)</span>
     <span class="n">factory</span><span class="o">.</span><span class="n">set_placed_component</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">==</span> <span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">==</span> <span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">]</span>
     <span class="n">factory</span><span class="o">.</span><span class="n">remove_placed_component</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">==</span> <span class="p">[]</span></div>
 
@@ -350,11 +354,14 @@
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">factory</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
 
-    <span class="c1"># not yet implemented</span>
-    <span class="c1"># factory.create_gantt_plotly(init_datetime, timedelta, save_fig_path=&quot;test.png&quot;)</span>
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">factory</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_create_data_for_cost_history_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_factory.test_create_data_for_cost_history_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_cost_history_plotly</span><span class="p">():</span>
@@ -397,11 +404,14 @@
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">factory</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span>
-    <span class="n">factory</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span>
-        <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;bbbbbbb&quot;</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span>
-    <span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span></div>
+
+    <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
+        <span class="n">save_fig_path</span> <span class="o">=</span> <span class="s2">&quot;test.&quot;</span> <span class="o">+</span> <span class="n">ext</span>
+        <span class="n">factory</span><span class="o">.</span><span class="n">create_cost_history_plotly</span><span class="p">(</span>
+            <span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;bbbbbbb&quot;</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
