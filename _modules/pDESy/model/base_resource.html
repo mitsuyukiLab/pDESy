@@ -340,6 +340,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assigned_task_id_record</span> <span class="o">=</span> <span class="p">[]</span></div>
 
+<div class="viewcode-block" id="BaseResource.reverse_log_information"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_resource.BaseResource.reverse_log_information">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_log_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse log information of all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_record_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assigned_task_id_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assigned_task_id_record</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="BaseResource.record_assigned_task_id"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_resource.BaseResource.record_assigned_task_id">[docs]</a>    <span class="k">def</span> <span class="nf">record_assigned_task_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Record assigned task id to `assigned_task_id_record`.</span>
@@ -382,22 +390,23 @@
                             <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
                     <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">FREE</span><span class="p">:</span>
                             <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
-
+                    <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
                     <span class="n">to_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
             <span class="n">previous_state</span> <span class="o">=</span> <span class="n">state</span>
-        <span class="c1"># for stoping until the end.</span>
-        <span class="k">if</span> <span class="n">to_time</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">from_time</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
             <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
-                <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">))</span>
+                <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">elif</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">FREE</span><span class="p">:</span>
-                <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">))</span>
+                <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">ready_time_list</span><span class="p">,</span> <span class="n">working_time_list</span></div>
 
 <div class="viewcode-block" id="BaseResource.has_workamount_skill"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_resource.BaseResource.has_workamount_skill">[docs]</a>    <span class="k">def</span> <span class="nf">has_workamount_skill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_name</span><span class="p">,</span> <span class="n">error_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>

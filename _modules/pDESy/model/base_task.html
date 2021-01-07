@@ -688,6 +688,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_record_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="BaseTask.reverse_log_information"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_task.BaseTask.reverse_log_information">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_log_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse log information of all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_record_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allocated_worker_id_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocated_worker_id_record</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allocated_facility_id_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocated_facility_id_record</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="BaseTask.get_state_from_record"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_task.BaseTask.get_state_from_record">[docs]</a>    <span class="k">def</span> <span class="nf">get_state_from_record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the state information in time</span>
@@ -724,7 +732,7 @@
                     <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
                 <span class="k">elif</span> <span class="n">to_time</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                     <span class="n">to_time</span> <span class="o">=</span> <span class="n">time</span>
-                    <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="p">(</span><span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span> <span class="ow">or</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span> <span class="ow">or</span> <span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
                             <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
@@ -733,28 +741,28 @@
                             <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="n">from_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
                     <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
                             <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
                     <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">:</span>
                             <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="p">(</span><span class="n">to_time</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
                             <span class="p">)</span>
-                        <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
-
+                    <span class="n">from_time</span> <span class="o">=</span> <span class="n">time</span>
                     <span class="n">to_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
             <span class="n">previous_state</span> <span class="o">=</span> <span class="n">state</span>
-        <span class="c1"># for stoping until the end.</span>
-        <span class="k">if</span> <span class="n">to_time</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">from_time</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
             <span class="k">if</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">:</span>
-                <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">))</span>
+                <span class="n">working_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">elif</span> <span class="n">previous_state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">:</span>
-                <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">))</span>
+                <span class="n">ready_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">time</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">ready_time_list</span><span class="p">,</span> <span class="n">working_time_list</span></div>
 
 <div class="viewcode-block" id="BaseTask.create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_task.BaseTask.create_data_for_gantt_plotly">[docs]</a>    <span class="k">def</span> <span class="nf">create_data_for_gantt_plotly</span><span class="p">(</span>

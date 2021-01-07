@@ -619,6 +619,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">update_PERT_data</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="BaseWorkflow.reverse_log_information"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.reverse_log_information">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_log_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse log information of all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">reverse_log_information</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="BaseWorkflow.record"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.record">[docs]</a>    <span class="k">def</span> <span class="nf">record</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Record the state of all tasks in `task_list`.</span>

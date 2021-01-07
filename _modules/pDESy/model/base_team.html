@@ -322,6 +322,14 @@
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">worker_list</span><span class="p">:</span>
             <span class="n">w</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="BaseTeam.reverse_log_information"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_team.BaseTeam.reverse_log_information">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_log_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse log information of all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">worker_list</span><span class="p">:</span>
+            <span class="n">w</span><span class="o">.</span><span class="n">reverse_log_information</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="BaseTeam.add_labor_cost"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_team.BaseTeam.add_labor_cost">[docs]</a>    <span class="k">def</span> <span class="nf">add_labor_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">only_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_zero_to_all_workers</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add labor cost to workers in this team.</span>

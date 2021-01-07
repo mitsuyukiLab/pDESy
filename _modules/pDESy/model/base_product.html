@@ -344,6 +344,13 @@
                 <span class="n">component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">component_list</span>
 
+<div class="viewcode-block" id="BaseProduct.reverse_log_information"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_product.BaseProduct.reverse_log_information">[docs]</a>    <span class="k">def</span> <span class="nf">reverse_log_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reverse log information of all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_list</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">reverse_log_information</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="BaseProduct.get_component_list"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_product.BaseProduct.get_component_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_component_list</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
