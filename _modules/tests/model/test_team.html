@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_team &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_team &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -157,7 +157,7 @@
 <span class="kn">from</span> <span class="nn">pDESy.model.worker</span> <span class="kn">import</span> <span class="n">Worker</span>
 <span class="kn">from</span> <span class="nn">pDESy.model.team</span> <span class="kn">import</span> <span class="n">Team</span>
 <span class="kn">from</span> <span class="nn">pDESy.model.task</span> <span class="kn">import</span> <span class="n">Task</span>
-<span class="kn">from</span> <span class="nn">pDESy.model.base_resource</span> <span class="kn">import</span> <span class="n">BaseResourceState</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_worker</span> <span class="kn">import</span> <span class="n">BaseWorkerState</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 
@@ -219,17 +219,13 @@
     <span class="n">team</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">]</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">)</span>
     <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">]</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">WORKING</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span>
     <span class="n">w</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">]</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Task</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">)]</span>
     <span class="n">team</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">team</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">FREE</span>
+    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">==</span> <span class="p">[]</span></div>
 
 
@@ -238,8 +234,8 @@
     <span class="n">w1</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
     <span class="n">w2</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w2&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
     <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">w2</span><span class="p">,</span> <span class="n">w1</span><span class="p">]</span>
-    <span class="n">w1</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">WORKING</span>
-    <span class="n">w2</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">FREE</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span>
     <span class="n">team</span><span class="o">.</span><span class="n">add_labor_cost</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">w1</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[</span><span class="mf">10.0</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">w2</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
@@ -257,54 +253,50 @@
 <div class="viewcode-block" id="test_create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_team.test_create_data_for_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_gantt_plotly</span><span class="p">():</span>
     <span class="n">team</span> <span class="o">=</span> <span class="n">Team</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
     <span class="n">w1</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
-    <span class="n">w1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-    <span class="n">w1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">w2</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w2&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-    <span class="n">w2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="n">w2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">]</span>
 
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">team</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span>
-    <span class="c1"># w1 part1</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Task&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">w1</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">w1</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Worker&quot;</span>
-
-    <span class="c1"># w1 part2</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Task&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">w1</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">w1</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">w1</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Worker&quot;</span>
-
-    <span class="c1"># w2</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">w2</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Worker&quot;</span></div>
+    <span class="n">team</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_create_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_team.test_create_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_gantt_plotly</span><span class="p">():</span>
     <span class="n">team</span> <span class="o">=</span> <span class="n">Team</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
     <span class="n">w1</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
-    <span class="n">w1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-    <span class="n">w1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+    <span class="n">w1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">w2</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">(</span><span class="s2">&quot;w2&quot;</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-    <span class="n">w2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="n">w2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+    <span class="n">w2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+        <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">]</span>
 
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -369,7 +361,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

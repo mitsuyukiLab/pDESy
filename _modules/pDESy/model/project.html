@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.project &mdash; pDESy 0.3.2 documentation</title>
+  <title>pDESy.model.project &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -230,8 +230,19 @@
         <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">read_pDES_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Project.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+<div class="viewcode-block" id="Project.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the following changeable variables of Project.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_info (bool):</span>
+<span class="sd">                State information are initialized or not.</span>
+<span class="sd">                Defaluts to True.</span>
+<span class="sd">            log_info (bool):</span>
+<span class="sd">                Log information are initialized or not.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Project.simulate"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.project.Project.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -536,7 +547,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_base_project &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_base_project &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -204,7 +204,7 @@
     <span class="n">team</span> <span class="o">=</span> <span class="n">BaseTeam</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
     <span class="n">team</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
 
-    <span class="c1"># BaseResources in each BaseTeam</span>
+    <span class="c1"># BaseWorkers in each BaseTeam</span>
     <span class="n">w1</span> <span class="o">=</span> <span class="n">BaseWorker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">team_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
     <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">task1_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -278,7 +278,7 @@
     <span class="n">team</span> <span class="o">=</span> <span class="n">BaseTeam</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
     <span class="n">team</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
 
-    <span class="c1"># BaseResources in each BaseTeam</span>
+    <span class="c1"># BaseWorkers in each BaseTeam</span>
     <span class="n">w1</span> <span class="o">=</span> <span class="n">BaseWorker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">team_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
     <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">task1_1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -308,6 +308,7 @@
         <span class="n">workflow</span><span class="o">=</span><span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1_1</span><span class="p">,</span> <span class="n">task1_2</span><span class="p">,</span> <span class="n">task2_1</span><span class="p">,</span> <span class="n">task3</span><span class="p">,</span> <span class="n">task0</span><span class="p">]),</span>
         <span class="n">organization</span><span class="o">=</span><span class="n">BaseOrganization</span><span class="p">(</span><span class="n">team_list</span><span class="o">=</span><span class="p">[</span><span class="n">team</span><span class="p">],</span> <span class="n">factory_list</span><span class="o">=</span><span class="p">[</span><span class="n">factory</span><span class="p">]),</span>
         <span class="n">time</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">log_txt</span><span class="o">=</span><span class="s2">&quot;aaa&quot;</span><span class="p">,</span>
         <span class="n">cost_list</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
@@ -353,7 +354,7 @@
     <span class="n">team</span> <span class="o">=</span> <span class="n">BaseTeam</span><span class="p">(</span><span class="s2">&quot;team&quot;</span><span class="p">)</span>
     <span class="n">team</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">,</span> <span class="n">task3</span><span class="p">])</span>
 
-    <span class="c1"># BaseResources in each BaseTeam</span>
+    <span class="c1"># BaseWorkers in each BaseTeam</span>
     <span class="n">w1</span> <span class="o">=</span> <span class="n">BaseWorker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">team_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">cost_per_time</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>
     <span class="n">w1</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">task1</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -387,29 +388,10 @@
 <div class="viewcode-block" id="test_place_check"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_place_check">[docs]</a><span class="k">def</span> <span class="nf">test_place_check</span><span class="p">(</span><span class="n">dummy_place_check</span><span class="p">):</span>
     <span class="c1"># factory space size = 1.5</span>
     <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max_space_size</span> <span class="o">=</span> <span class="mf">1.5</span>
-    <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">29</span><span class="p">]</span>
-
+    <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
     <span class="c1"># factory space size = 2</span>
     <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max_space_size</span> <span class="o">=</span> <span class="mf">2.0</span>
-    <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span></div>
+    <span class="n">dummy_place_check</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_init"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_init">[docs]</a><span class="k">def</span> <span class="nf">test_init</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
@@ -520,7 +502,6 @@
 <div class="viewcode-block" id="test_create_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_create_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_gantt_plotly</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
     <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
@@ -567,55 +548,13 @@
         <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">24</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">0</span><span class="p">,</span>
-        <span class="mi">10</span><span class="p">,</span>
-        <span class="mi">20</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">9</span><span class="p">,</span>
-        <span class="mi">19</span><span class="p">,</span>
-        <span class="mi">24</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">0</span><span class="p">,</span>
-        <span class="mi">20</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">9</span><span class="p">,</span>
-        <span class="mi">24</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
 
     <span class="c1"># mode=?? -&gt; Error</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
             <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span>
-            <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># mode=?? -&gt; Error (not yet implemented)</span>
@@ -623,7 +562,6 @@
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
             <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-aaaaa&quot;</span><span class="p">,</span>
-            <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># time is over max_time</span>
@@ -631,7 +569,6 @@
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
             <span class="n">max_time</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
             <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
-            <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># dummy_project2</span>
@@ -640,46 +577,7 @@
         <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">29</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">0</span><span class="p">,</span>
-        <span class="mi">10</span><span class="p">,</span>
-        <span class="mi">20</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">9</span><span class="p">,</span>
-        <span class="mi">19</span><span class="p">,</span>
-        <span class="mi">29</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">0</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">9</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project2</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span></div>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_baskward_simulate"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_baskward_simulate">[docs]</a><span class="k">def</span> <span class="nf">test_baskward_simulate</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
@@ -688,49 +586,7 @@
         <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="c1"># print(dummy_project.time)</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">19</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">24</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">15</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">24</span><span class="p">]</span>
-
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">0</span><span class="p">,</span>
-        <span class="mi">10</span><span class="p">,</span>
-        <span class="mi">20</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">9</span><span class="p">,</span>
-        <span class="mi">19</span><span class="p">,</span>
-        <span class="mi">24</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">10</span><span class="p">,</span>
-        <span class="mi">20</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">worker_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="mi">19</span><span class="p">,</span>
-        <span class="mi">24</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">dummy_project</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">facility_list</span><span class="p">[</span>
-        <span class="mi">0</span>
-    <span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">9</span><span class="p">]</span>
 
     <span class="n">dummy_project</span><span class="o">.</span><span class="n">backward_simulate</span><span class="p">(</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
@@ -738,7 +594,6 @@
         <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
         <span class="n">considering_due_time_of_tail_tasks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span></div>
     <span class="c1"># assert dummy_project.workflow.task_list[0].ready_time_list == [4]</span>
     <span class="c1"># assert dummy_project.workflow.task_list[0].start_time_list == [5]</span>
@@ -785,19 +640,30 @@
     <span class="c1"># ].finish_time_list == [14]</span>
 
 
-<div class="viewcode-block" id="test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResource"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResource">[docs]</a><span class="k">def</span> <span class="nf">test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResource</span><span class="p">():</span>
-    <span class="c1"># this method is tested in other test code..</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="test_output_simlog"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_output_simlog">[docs]</a><span class="k">def</span> <span class="nf">test_output_simlog</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">output_simlog</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="test___is_allocated"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test___is_allocated">[docs]</a><span class="k">def</span> <span class="nf">test___is_allocated</span><span class="p">():</span>
-    <span class="c1"># this method is tested in other test code..</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="test_simple_write_json"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test_simple_write_json">[docs]</a><span class="k">def</span> <span class="nf">test_simple_write_json</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
 
-
-<div class="viewcode-block" id="test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResources"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_project.test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResources">[docs]</a><span class="k">def</span> <span class="nf">test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResources</span><span class="p">():</span>
-    <span class="c1"># this method is tested in other test code..</span>
-    <span class="k">pass</span></div>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">write_simple_json</span><span class="p">(</span><span class="s2">&quot;test.json&quot;</span><span class="p">)</span>
+    <span class="n">read_p</span> <span class="o">=</span> <span class="n">BaseProject</span><span class="p">()</span>
+    <span class="n">read_p</span><span class="o">.</span><span class="n">read_simple_json</span><span class="p">(</span><span class="s2">&quot;test.json&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.json&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.json&quot;</span><span class="p">)</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">read_p</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">read_p</span><span class="o">.</span><span class="n">write_simple_json</span><span class="p">(</span><span class="s2">&quot;test2.json&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test2.json&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test2.json&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -811,7 +677,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.component &mdash; pDESy 0.3.2 documentation</title>
+  <title>pDESy.model.component &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -220,14 +220,26 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="mf">0.0</span>
 
-<div class="viewcode-block" id="Component.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.component.Component.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Component.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.component.Component.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the changeable variables of Component</span>
+<span class="sd">        Initialize the following changeable variables of Component</span>
 
-<span class="sd">        - error</span>
+<span class="sd">        If `state_info` is True, the following attributes are initialized</span>
+<span class="sd">        in addition to &#39;BaseComponent.initialize()&#39;.</span>
+
+<span class="sd">          - error</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_info (bool):</span>
+<span class="sd">                State information are initialized or not.</span>
+<span class="sd">                Defaluts to True.</span>
+<span class="sd">            log_info (bool):</span>
+<span class="sd">                Log information are initialized or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="mf">0.0</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">state_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
 <div class="viewcode-block" id="Component.update_error_value"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.component.Component.update_error_value">[docs]</a>    <span class="k">def</span> <span class="nf">update_error_value</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">no_error_prob</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">error_increment</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span>
@@ -268,7 +280,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

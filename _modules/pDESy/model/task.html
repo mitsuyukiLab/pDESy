@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.task &mdash; pDESy 0.3.2 documentation</title>
+  <title>pDESy.model.task &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -237,25 +237,13 @@
 <span class="sd">            Basic variable.</span>
 <span class="sd">            State of this task in simulation.</span>
 <span class="sd">            Defaults to BaseTaskState.NONE.</span>
-<span class="sd">        ready_time_list (List[float], optional):</span>
+<span class="sd">        allocated_worker_list (List[BaseWorker], optional):</span>
 <span class="sd">            Basic variable.</span>
-<span class="sd">            History or record of READY time in simulation.</span>
-<span class="sd">            Defaults to None -&gt; [].</span>
-<span class="sd">        start_time_list (List[float], optional):</span>
-<span class="sd">            Basic variable.</span>
-<span class="sd">            History or record of start WORKING time in simulation.</span>
-<span class="sd">            Defaults to None -&gt; [].</span>
-<span class="sd">        finish_time_list (List[float], optional):</span>
-<span class="sd">            Basic variable.</span>
-<span class="sd">            History or record of finish WORKING time in simulation.</span>
-<span class="sd">            Defaults to None -&gt; [].</span>
-<span class="sd">        allocated_worker_list (List[BaseResource], optional):</span>
-<span class="sd">            Basic variable.</span>
-<span class="sd">            State of allocating resource list in simulation.</span>
+<span class="sd">            State of allocating worker list in simulation.</span>
 <span class="sd">            Defaults to None -&gt; [].</span>
 <span class="sd">        allocated_worker_id_record (List[List[str]], optional):</span>
 <span class="sd">            Basic variable.</span>
-<span class="sd">            State of allocating resource id list in simulation.</span>
+<span class="sd">            State of allocating worker id list in simulation.</span>
 <span class="sd">            Defaults to None -&gt; [].</span>
 <span class="sd">        allocated_facility_list (List[BaseFacility], optional):</span>
 <span class="sd">            Basic variable.</span>
@@ -294,9 +282,6 @@
         <span class="n">lft</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span>
         <span class="n">remaining_work_amount</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">state</span><span class="o">=</span><span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
-        <span class="n">ready_time_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">start_time_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">finish_time_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">allocated_worker_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">allocated_worker_id_record</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">allocated_facility_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -325,9 +310,6 @@
             <span class="n">lft</span><span class="o">=</span><span class="n">lft</span><span class="p">,</span>
             <span class="n">remaining_work_amount</span><span class="o">=</span><span class="n">remaining_work_amount</span><span class="p">,</span>
             <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span>
-            <span class="n">ready_time_list</span><span class="o">=</span><span class="n">ready_time_list</span><span class="p">,</span>
-            <span class="n">start_time_list</span><span class="o">=</span><span class="n">start_time_list</span><span class="p">,</span>
-            <span class="n">finish_time_list</span><span class="o">=</span><span class="n">finish_time_list</span><span class="p">,</span>
             <span class="n">allocated_worker_list</span><span class="o">=</span><span class="n">allocated_worker_list</span><span class="p">,</span>
             <span class="n">allocated_worker_id_record</span><span class="o">=</span><span class="n">allocated_worker_id_record</span><span class="p">,</span>
             <span class="n">allocated_facility_list</span><span class="o">=</span><span class="n">allocated_facility_list</span><span class="p">,</span>
@@ -348,32 +330,30 @@
             <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_progress</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Task.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.task.Task.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">):</span>
+<div class="viewcode-block" id="Task.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.task.Task.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the changeable variables of Task</span>
+<span class="sd">        Initialize the following changeable variables of Task.</span>
+<span class="sd">        If `state_info` is True, the following attributes are initialized</span>
+<span class="sd">        in addition to &#39;BaseTask.initialize()&#39;.</span>
 
-<span class="sd">        - est</span>
-<span class="sd">        - eft</span>
-<span class="sd">        - lst</span>
-<span class="sd">        - lft</span>
-<span class="sd">        - remaining_work_amount</span>
-<span class="sd">        - state</span>
-<span class="sd">        - ready_time_list</span>
-<span class="sd">        - start_time_list</span>
-<span class="sd">        - finish_time_list</span>
-<span class="sd">        - allocated_worker_list</span>
-<span class="sd">        - allocated_worker_id_record</span>
-<span class="sd">        - allocated_facility_list</span>
-<span class="sd">        - allocated_facility_id_record</span>
-<span class="sd">        - additional_task_flag</span>
-<span class="sd">        - actual_work_amount</span>
+<span class="sd">          - additional_task_flag</span>
+<span class="sd">          - actual_work_amount</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_info (bool):</span>
+<span class="sd">                State information are initialized or not.</span>
+<span class="sd">                Defaluts to True.</span>
+<span class="sd">            log_info (bool):</span>
+<span class="sd">                Log information are initialized or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">error_tol</span><span class="o">=</span><span class="n">error_tol</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">error_tol</span><span class="o">=</span><span class="n">error_tol</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">additional_task_flag</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">actual_work_amount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_work_amount</span> <span class="o">*</span> <span class="p">(</span>
-            <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_progress</span>
-        <span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">state_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">additional_task_flag</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actual_work_amount</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_work_amount</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_progress</span>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Task.perform"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.task.Task.perform">[docs]</a>    <span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">increase_component_error</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -466,7 +446,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

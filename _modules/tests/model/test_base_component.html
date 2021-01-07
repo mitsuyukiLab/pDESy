@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_base_component &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_base_component &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -154,7 +154,7 @@
 <span></span><span class="ch">#!/usr/bin/python</span>
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">from</span> <span class="nn">pDESy.model.base_component</span> <span class="kn">import</span> <span class="n">BaseComponent</span>
+<span class="kn">from</span> <span class="nn">pDESy.model.base_component</span> <span class="kn">import</span> <span class="n">BaseComponent</span><span class="p">,</span> <span class="n">BaseComponentState</span>
 <span class="kn">from</span> <span class="nn">pDESy.model.base_task</span> <span class="kn">import</span> <span class="n">BaseTask</span><span class="p">,</span> <span class="n">BaseTaskState</span>
 <span class="kn">from</span> <span class="nn">pDESy.model.base_factory</span> <span class="kn">import</span> <span class="n">BaseFactory</span>
 
@@ -175,6 +175,8 @@
         <span class="n">parent_component_list</span><span class="o">=</span><span class="p">[</span><span class="n">c2</span><span class="p">],</span>
         <span class="n">targeted_task_list</span><span class="o">=</span><span class="p">[</span><span class="n">task</span><span class="p">],</span>
         <span class="n">space_size</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="n">BaseComponentState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">state_record_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;aa&quot;</span><span class="p">],</span>
         <span class="n">placed_factory</span><span class="o">=</span><span class="n">BaseFactory</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">),</span>
         <span class="n">placed_factory_id_record</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;fff&quot;</span><span class="p">],</span>
     <span class="p">)</span>
@@ -287,75 +289,16 @@
 
 <div class="viewcode-block" id="test_create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_component.test_create_data_for_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_gantt_plotly</span><span class="p">():</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">BaseComponent</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">)</span>
-    <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">c</span><span class="o">.</span><span class="n">extend_targeted_task_list</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
-
-    <span class="c1"># Set test case (start time = 0, finish time = 5)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseComponentState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseComponentState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseComponentState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseComponentState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseComponentState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="c1"># timedelta = 1day</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
-        <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
-    <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
-        <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
-    <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Component&quot;</span></div>
-
-
-<span class="c1"># def test_get_state_record_list():</span>
-<span class="c1">#     c = BaseComponent(&quot;c&quot;)</span>
-<span class="c1">#     task1 = BaseTask(&quot;task1&quot;)</span>
-<span class="c1">#     task2 = BaseTask(&quot;task2&quot;)</span>
-<span class="c1">#     c.extend_targeted_task_list([task1, task2])</span>
-
-<span class="c1">#     # Set test case</span>
-<span class="c1">#     task1.ready_time_list = [0, 4]</span>
-<span class="c1">#     task1.start_time_list = [1, 5]</span>
-<span class="c1">#     task1.finish_time_list = [2, 6]</span>
-<span class="c1">#     task2.ready_time_list = [1]</span>
-<span class="c1">#     task2.start_time_list = [2]</span>
-<span class="c1">#     task2.finish_time_list = [3]</span>
-
-<span class="c1">#     assert c.get_state_record_list(auto_task=False) == [</span>
-<span class="c1">#         BaseTaskState.READY,</span>
-<span class="c1">#         BaseTaskState.WORKING,</span>
-<span class="c1">#         BaseTaskState.WORKING,</span>
-<span class="c1">#         BaseTaskState.FINISHED,</span>
-<span class="c1">#         BaseTaskState.READY,</span>
-<span class="c1">#         BaseTaskState.WORKING,</span>
-<span class="c1">#         BaseTaskState.FINISHED,</span>
-<span class="c1">#     ]</span>
-
-
-<span class="c1"># def test_get_ready_start_finish_time_list():</span>
-<span class="c1">#     c = BaseComponent(&quot;c&quot;)</span>
-<span class="c1">#     task1 = BaseTask(&quot;task1&quot;)</span>
-<span class="c1">#     task2 = BaseTask(&quot;task2&quot;)</span>
-<span class="c1">#     c.extend_targeted_task_list([task1, task2])</span>
-
-<span class="c1">#     # Set test case</span>
-<span class="c1">#     task1.ready_time_list = [0, 4]</span>
-<span class="c1">#     task1.start_time_list = [1, 5]</span>
-<span class="c1">#     task1.finish_time_list = [2, 6]</span>
-<span class="c1">#     task2.ready_time_list = [1]</span>
-<span class="c1">#     task2.start_time_list = [2]</span>
-<span class="c1">#     task2.finish_time_list = [3]</span>
-
-<span class="c1">#     rlist, slist, flist = c.get_ready_start_finish_time_list(auto_task=True)</span>
-
-<span class="c1">#     assert rlist == [0, 4]</span>
-<span class="c1">#     assert slist == [1, 5]</span>
-<span class="c1">#     assert flist == [3, 6]</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -369,7 +312,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

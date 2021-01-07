@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.base_factory &mdash; pDESy 0.3.2 documentation</title>
+  <title>pDESy.model.base_factory &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -160,6 +160,7 @@
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 <span class="kn">import</span> <span class="nn">plotly.figure_factory</span> <span class="k">as</span> <span class="nn">ff</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
 
@@ -260,7 +261,7 @@
 
 <div class="viewcode-block" id="BaseFactory.set_parent_factory"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.set_parent_factory">[docs]</a>    <span class="k">def</span> <span class="nf">set_parent_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_factory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set parent factory</span>
+<span class="sd">        Set `parent_factory`</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            parent_factory (BaseFactory):</span>
@@ -276,7 +277,7 @@
 
 <div class="viewcode-block" id="BaseFactory.add_facility"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.add_facility">[docs]</a>    <span class="k">def</span> <span class="nf">add_facility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">facility</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add facility to self.facility_list</span>
+<span class="sd">        Add facility to `facility_list`</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            facility (BaseFacility):</span>
@@ -308,7 +309,7 @@
 
 <div class="viewcode-block" id="BaseFactory.extend_targeted_task_list"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.extend_targeted_task_list">[docs]</a>    <span class="k">def</span> <span class="nf">extend_targeted_task_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targeted_task_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extend the list of targeted tasks</span>
+<span class="sd">        Extend the list of targeted tasks to `targeted_task_list`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            targeted_task_list (list[BaseTask]):</span>
@@ -326,7 +327,7 @@
 
 <div class="viewcode-block" id="BaseFactory.append_targeted_task"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.append_targeted_task">[docs]</a>    <span class="k">def</span> <span class="nf">append_targeted_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targeted_task</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Append targeted task</span>
+<span class="sd">        Append targeted task to `targeted_task_list`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            targeted_task (BaseTask):</span>
@@ -349,13 +350,13 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">placed_component</span><span class="p">,</span> <span class="n">set_to_all_children_components</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set the placed_factory</span>
+<span class="sd">        Set the `placed_factory`.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            placed_component (BaseComponent):</span>
 <span class="sd">                Component which places to this factory</span>
 <span class="sd">            set_to_all_children_components (bool):</span>
-<span class="sd">                If True, set placed_factory to all children components</span>
+<span class="sd">                If True, set `placed_factory` to all children components</span>
 <span class="sd">                Default to True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">placed_component</span><span class="p">)</span>
@@ -371,13 +372,13 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">placed_component</span><span class="p">,</span> <span class="n">remove_to_all_children_components</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Remove the placed_factory</span>
+<span class="sd">        Remove the `placed_factory`</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            placed_component (BaseComponent):</span>
 <span class="sd">                Component which places to this factory</span>
 <span class="sd">            remove_to_all_children_components (bool):</span>
-<span class="sd">                If True, remove placed_factory to all children components</span>
+<span class="sd">                If True, remove `placed_factory` to all children components</span>
 <span class="sd">                Default to True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">placed_component</span><span class="p">)</span>
@@ -409,24 +410,38 @@
             <span class="n">can_put</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">can_put</span></div>
 
-<div class="viewcode-block" id="BaseFactory.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFactory.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the changeable variables of BaseFactory</span>
+<span class="sd">        Initialize the following changeable variables of BaseFactory.</span>
+<span class="sd">        If `state_info` is True, the following attributes are initialized.</span>
 
-<span class="sd">        - cost_list</span>
-<span class="sd">        - placed_component_list</span>
-<span class="sd">        - placed_component_id_record</span>
-<span class="sd">        - changeable basic variable of BaseFacility in facility_list</span>
+<span class="sd">          - `placed_component_list`</span>
+
+<span class="sd">        If `log_info` is True, the following attributes are initialized.</span>
+<span class="sd">          - `cost_list`</span>
+<span class="sd">          - `placed_component_id_record`</span>
+
+<span class="sd">        BaseFacility in `facility_list` are also initialized by this function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_info (bool):</span>
+<span class="sd">                State information are initialized or not.</span>
+<span class="sd">                Defaluts to True.</span>
+<span class="sd">            log_info (bool):</span>
+<span class="sd">                Log information are initialized or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_id_record</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">state_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">log_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_id_record</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
-            <span class="n">w</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+            <span class="n">w</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseFactory.add_labor_cost"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.add_labor_cost">[docs]</a>    <span class="k">def</span> <span class="nf">add_labor_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">only_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_zero_to_all_facilities</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add labor cost to resources in this factory.</span>
+<span class="sd">        Add labor cost to facilities in this factory.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            only_working (bool, optional):</span>
@@ -467,14 +482,14 @@
 
 <div class="viewcode-block" id="BaseFactory.record_assigned_task_id"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.record_assigned_task_id">[docs]</a>    <span class="k">def</span> <span class="nf">record_assigned_task_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Record assigned task id in this time.</span>
+<span class="sd">        Record assigned task id by using BaseFacility.record_assigned_task_id().</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
-            <span class="n">resource</span><span class="o">.</span><span class="n">record_assigned_task_id</span><span class="p">()</span></div>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">record_assigned_task_id</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BaseFactory.record_placed_component_id"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.record_placed_component_id">[docs]</a>    <span class="k">def</span> <span class="nf">record_placed_component_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Record component id in this time.</span>
+<span class="sd">        Record component id list to `placed_component_id_record`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">record</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -482,6 +497,13 @@
             <span class="n">record</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_id_record</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseFactory.record_all_facility_state"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.record_all_facility_state">[docs]</a>    <span class="k">def</span> <span class="nf">record_all_facility_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Record state of all facilities by using BaseFacility.record_state().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">facility</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
+            <span class="n">facility</span><span class="o">.</span><span class="n">record_state</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -494,15 +516,297 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
+<div class="viewcode-block" id="BaseFactory.export_dict_json_data"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.export_dict_json_data">[docs]</a>    <span class="k">def</span> <span class="nf">export_dict_json_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export the information of this factory to JSON data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: JSON format data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_json_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dict_json_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;BaseFactory&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">ID</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span>
+            <span class="n">facility_list</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">export_dict_json_data</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">],</span>
+            <span class="n">targeted_task_list</span><span class="o">=</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">targeted_task_list</span><span class="p">],</span>
+            <span class="n">parent_factory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_factory</span><span class="o">.</span><span class="n">ID</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent_factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">max_space_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_space_size</span><span class="p">,</span>
+            <span class="n">cost_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span><span class="p">,</span>
+            <span class="n">placed_component_list</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">],</span>
+            <span class="n">placed_component_id_record</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">placed_component_id_record</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">dict_json_data</span></div>
+
+<div class="viewcode-block" id="BaseFactory.extract_free_facility_list"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.extract_free_facility_list">[docs]</a>    <span class="k">def</span> <span class="nf">extract_free_facility_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_time_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract FREE facility list from simulation result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_time_list (List[int]):</span>
+<span class="sd">                Target time list.</span>
+<span class="sd">                If you want to extract free facility from time 2 to time 4,</span>
+<span class="sd">                you must set [2, 3, 4] to this argument.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            List[BaseFacility]: List of BaseFacility</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extract_state_facility_list</span><span class="p">(</span>
+            <span class="n">target_time_list</span><span class="p">,</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">FREE</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseFactory.extract_working_facility_list"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.extract_working_facility_list">[docs]</a>    <span class="k">def</span> <span class="nf">extract_working_facility_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_time_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract WORKING facility list from simulation result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_time_list (List[int]):</span>
+<span class="sd">                Target time list.</span>
+<span class="sd">                If you want to extract working facility from time 2 to time 4,</span>
+<span class="sd">                you must set [2, 3, 4] to this argument.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            List[BaseFacility]: List of BaseFacility</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__extract_state_facility_list</span><span class="p">(</span>
+            <span class="n">target_time_list</span><span class="p">,</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">WORKING</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__extract_state_facility_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_time_list</span><span class="p">,</span> <span class="n">target_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract state facility list from simulation result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_time_list (List[int]):</span>
+<span class="sd">                Target time list.</span>
+<span class="sd">                If you want to extract target_state facility from time 2 to time 4,</span>
+<span class="sd">                you must set [2, 3, 4] to this argument.</span>
+<span class="sd">            target_state (BaseFacilityState):</span>
+<span class="sd">                Target state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            List[BaseFacility]: List of BaseFacility</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">facility_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">facility</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
+            <span class="n">extract_flag</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">target_time_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">facility</span><span class="o">.</span><span class="n">state_record_list</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">time</span><span class="p">:</span>
+                    <span class="n">extract_flag</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">facility</span><span class="o">.</span><span class="n">state_record_list</span><span class="p">[</span><span class="n">time</span><span class="p">]</span> <span class="o">!=</span> <span class="n">target_state</span><span class="p">:</span>
+                    <span class="n">extract_flag</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">extract_flag</span><span class="p">:</span>
+                <span class="n">facility_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">facility</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">facility_list</span>
+
+<div class="viewcode-block" id="BaseFactory.get_facility_list"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.get_facility_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_facility_list</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ID</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">factory_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cost_per_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">solo_working</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">workamount_skill_mean_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">workamount_skill_sd_map</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cost_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">assigned_task_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">assigned_task_id_record</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get facility list by using search conditions related to BaseFacility parameter.</span>
+<span class="sd">        If there is no searching condition, this function returns all self.facility_list</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str, optional):</span>
+<span class="sd">                Target facility name.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            ID (str, optional):</span>
+<span class="sd">                Target facility ID.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            factory_id (str, optional):</span>
+<span class="sd">                Target facility factory_id.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            cost_per_time (float, optional):</span>
+<span class="sd">                Target facility cost_per_time.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            solo_working (bool, optional):</span>
+<span class="sd">                Target facility solo_working.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            workamount_skill_mean_map (Dict[str, float], optional):</span>
+<span class="sd">                Target facility workamount_skill_mean_map.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            workamount_skill_sd_map (Dict[str, float], optional):</span>
+<span class="sd">                Target facility workamount_skill_sd_map.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            state (BaseFacilityState, optional):</span>
+<span class="sd">                Target facility state.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            cost_list (List[float], optional):</span>
+<span class="sd">                Target facility cost_list.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            assigned_task_list (List[BaseTask], optional):</span>
+<span class="sd">                Target facility assigned_task_list.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            assigned_task_id_record (List[List[str]], optional):</span>
+<span class="sd">                Target facility assigned_task_id_record.</span>
+<span class="sd">                Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[BaseFacility]: List of BaseFacility.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">facility_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">ID</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">ID</span> <span class="o">==</span> <span class="n">ID</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">factory_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">factory_id</span> <span class="o">==</span> <span class="n">factory_id</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cost_per_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">cost_per_time</span> <span class="o">==</span> <span class="n">cost_per_time</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">solo_working</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">solo_working</span> <span class="o">==</span> <span class="n">solo_working</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">workamount_skill_mean_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">==</span> <span class="n">workamount_skill_mean_map</span><span class="p">,</span>
+                    <span class="n">facility_list</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">workamount_skill_sd_map</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">workamount_skill_sd_map</span> <span class="o">==</span> <span class="n">workamount_skill_sd_map</span><span class="p">,</span>
+                    <span class="n">facility_list</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">state</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cost_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="n">cost_list</span><span class="p">,</span> <span class="n">facility_list</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">assigned_task_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">==</span> <span class="n">assigned_task_list</span><span class="p">,</span> <span class="n">facility_list</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">assigned_task_id_record</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">assigned_task_id_record</span> <span class="o">==</span> <span class="n">assigned_task_id_record</span><span class="p">,</span>
+                    <span class="n">facility_list</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">facility_list</span></div>
+
+<div class="viewcode-block" id="BaseFactory.create_simple_gantt"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.create_simple_gantt">[docs]</a>    <span class="k">def</span> <span class="nf">create_simple_gantt</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">target_start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">target_finish_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">finish_margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">view_ready</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">facility_color</span><span class="o">=</span><span class="s2">&quot;#D9E5FF&quot;</span><span class="p">,</span>
+        <span class="n">ready_color</span><span class="o">=</span><span class="s2">&quot;#C0C0C0&quot;</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mf">6.4</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">],</span>
+        <span class="n">dpi</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>
+        <span class="n">save_fig_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for creating Gantt chart by matplotlib.</span>
+<span class="sd">        In this Gantt chart, datetime information is not included.</span>
+<span class="sd">        This method will be used after simulation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            target_start_time (int, optional):</span>
+<span class="sd">                Start time of target range of visualizing gant chart.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            target_finish_time (int, optional):</span>
+<span class="sd">                Finish time of target range of visualizing gant chart.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            finish_margin (float, optional):</span>
+<span class="sd">                Margin of finish time in Gantt chart.</span>
+<span class="sd">                Defaults to 1.0.</span>
+<span class="sd">            view_ready (bool, optional):</span>
+<span class="sd">                View READY time or not.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">            facility_color (str, optional):</span>
+<span class="sd">                Node color setting information.</span>
+<span class="sd">                Defaults to &quot;#D9E5FF&quot;.</span>
+<span class="sd">            ready_color (str, optional):</span>
+<span class="sd">                Ready color setting information.</span>
+<span class="sd">                Defaults to &quot;#C0C0C0&quot;.</span>
+<span class="sd">            figsize ((float, float), optional):</span>
+<span class="sd">                Width, height in inches.</span>
+<span class="sd">                Default to [6.4, 4.8]</span>
+<span class="sd">            dpi (float, optional):</span>
+<span class="sd">                The resolution of the figure in dots-per-inch.</span>
+<span class="sd">                Default to 100.0</span>
+<span class="sd">            save_fig_path (str, optional):</span>
+<span class="sd">                Path of saving figure.</span>
+<span class="sd">                Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            fig: fig in plt.subplots()</span>
+<span class="sd">            gnt: gnt in plt.subplots()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">gnt</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">figsize</span> <span class="o">=</span> <span class="n">figsize</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">dpi</span> <span class="o">=</span> <span class="n">dpi</span>
+        <span class="n">gnt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">)</span>
+        <span class="n">gnt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">target_facility_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">yticklabels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">facility</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
+            <span class="n">target_facility_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">facility</span><span class="p">)</span>
+            <span class="n">yticklabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">facility</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">yticks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_facility_list</span><span class="p">))]</span>
+
+        <span class="n">gnt</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">yticks</span><span class="p">)</span>
+        <span class="n">gnt</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">yticklabels</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ttime</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_facility_list</span><span class="p">)):</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">target_facility_list</span><span class="p">[</span><span class="n">ttime</span><span class="p">]</span>
+            <span class="p">(</span>
+                <span class="n">ready_time_list</span><span class="p">,</span>
+                <span class="n">working_time_list</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">get_time_list_for_gannt_chart</span><span class="p">(</span><span class="n">finish_margin</span><span class="o">=</span><span class="n">finish_margin</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">view_ready</span><span class="p">:</span>
+                <span class="n">gnt</span><span class="o">.</span><span class="n">broken_barh</span><span class="p">(</span>
+                    <span class="n">ready_time_list</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">yticks</span><span class="p">[</span><span class="n">ttime</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                    <span class="n">facecolors</span><span class="o">=</span><span class="p">(</span><span class="n">ready_color</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="n">gnt</span><span class="o">.</span><span class="n">broken_barh</span><span class="p">(</span>
+                <span class="n">working_time_list</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">yticks</span><span class="p">[</span><span class="n">ttime</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+                <span class="n">facecolors</span><span class="o">=</span><span class="p">(</span><span class="n">facility_color</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">save_fig_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">gnt</span></div>
+
 <div class="viewcode-block" id="BaseFactory.create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_factory.BaseFactory.create_data_for_gantt_plotly">[docs]</a>    <span class="k">def</span> <span class="nf">create_data_for_gantt_plotly</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">init_datetime</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
         <span class="n">unit_timedelta</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">,</span>
         <span class="n">finish_margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">view_ready</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create data for gantt plotly from start_time_list and finish_time_list</span>
-<span class="sd">        of BaseFacility in facility_list.</span>
+<span class="sd">        Create data for gantt plotly of BaseFacility in facility_list.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            init_datetime (datetime.datetime):</span>
@@ -512,24 +816,46 @@
 <span class="sd">            finish_margin (float, optional):</span>
 <span class="sd">                Margin of finish time in Gantt chart.</span>
 <span class="sd">                Defaults to 1.0.</span>
+<span class="sd">            view_ready (bool, optional):</span>
+<span class="sd">                View READY time or not.</span>
+<span class="sd">                Defaults to False.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            List[dict]: Gantt plotly information of this BaseFactory</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">facility</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">finish_time</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-                <span class="n">facility</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">,</span> <span class="n">facility</span><span class="o">.</span><span class="n">finish_time_list</span>
-            <span class="p">):</span>
+            <span class="p">(</span>
+                <span class="n">ready_time_list</span><span class="p">,</span>
+                <span class="n">working_time_list</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="n">facility</span><span class="o">.</span><span class="n">get_time_list_for_gannt_chart</span><span class="p">(</span><span class="n">finish_margin</span><span class="o">=</span><span class="n">finish_margin</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">view_ready</span><span class="p">:</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ready_time_list</span><span class="p">:</span>
+                    <span class="n">to_time</span> <span class="o">=</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">length</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">Task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">facility</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="n">Start</span><span class="o">=</span><span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="n">from_time</span> <span class="o">*</span> <span class="n">unit_timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                                <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+                            <span class="p">),</span>
+                            <span class="n">Finish</span><span class="o">=</span><span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="n">to_time</span> <span class="o">*</span> <span class="n">unit_timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                                <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+                            <span class="p">),</span>
+                            <span class="n">State</span><span class="o">=</span><span class="s2">&quot;READY&quot;</span><span class="p">,</span>
+                            <span class="n">Type</span><span class="o">=</span><span class="s2">&quot;Facility&quot;</span><span class="p">,</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">from_time</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="ow">in</span> <span class="n">working_time_list</span><span class="p">:</span>
+                <span class="n">to_time</span> <span class="o">=</span> <span class="n">from_time</span> <span class="o">+</span> <span class="n">length</span>
                 <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                     <span class="nb">dict</span><span class="p">(</span>
                         <span class="n">Task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="n">facility</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                        <span class="n">Start</span><span class="o">=</span><span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="n">start_time</span> <span class="o">*</span> <span class="n">unit_timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                        <span class="n">Start</span><span class="o">=</span><span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="n">from_time</span> <span class="o">*</span> <span class="n">unit_timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
                             <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
                         <span class="p">),</span>
-                        <span class="n">Finish</span><span class="o">=</span><span class="p">(</span>
-                            <span class="n">init_datetime</span>
-                            <span class="o">+</span> <span class="p">(</span><span class="n">finish_time</span> <span class="o">+</span> <span class="n">finish_margin</span><span class="p">)</span> <span class="o">*</span> <span class="n">unit_timedelta</span>
-                        <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span>
+                        <span class="n">Finish</span><span class="o">=</span><span class="p">(</span><span class="n">init_datetime</span> <span class="o">+</span> <span class="n">to_time</span> <span class="o">*</span> <span class="n">unit_timedelta</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                            <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+                        <span class="p">),</span>
+                        <span class="n">State</span><span class="o">=</span><span class="s2">&quot;WORKING&quot;</span><span class="p">,</span>
                         <span class="n">Type</span><span class="o">=</span><span class="s2">&quot;Facility&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
@@ -562,7 +888,7 @@
 <span class="sd">                Defaults to &quot;Gantt Chart&quot;.</span>
 <span class="sd">            colors (Dict[str, str], optional):</span>
 <span class="sd">                Color setting of plotly Gantt chart.</span>
-<span class="sd">                Defaults to None -&gt; dict(Facility=&quot;rgb(46, 137, 205)&quot;).</span>
+<span class="sd">                Defaults to None -&gt; dict(WORKING=&quot;rgb(46, 137, 205)&quot;, READY=&quot;rgb(107, 127, 135)&quot;).</span>
 <span class="sd">            index_col (str, optional):</span>
 <span class="sd">                index_col of plotly Gantt chart.</span>
 <span class="sd">                Defaults to None -&gt; &quot;Type&quot;.</span>
@@ -589,8 +915,12 @@
 <span class="sd">            Now, save_fig_path can be utilized only json and html format.</span>
 <span class="sd">            Saving figure png, jpg, svg file is not implemented...</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span> <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">Facility</span><span class="o">=</span><span class="s2">&quot;rgb(46, 137, 205)&quot;</span><span class="p">)</span>
-        <span class="n">index_col</span> <span class="o">=</span> <span class="n">index_col</span> <span class="k">if</span> <span class="n">index_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;Type&quot;</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">colors</span>
+            <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">WORKING</span><span class="o">=</span><span class="s2">&quot;rgb(46, 137, 205)&quot;</span><span class="p">,</span> <span class="n">READY</span><span class="o">=</span><span class="s2">&quot;rgb(107, 127, 135)&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">index_col</span> <span class="o">=</span> <span class="n">index_col</span> <span class="k">if</span> <span class="n">index_col</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;State&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">unit_timedelta</span><span class="p">)</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">create_gantt</span><span class="p">(</span>
             <span class="n">df</span><span class="p">,</span>
@@ -726,7 +1056,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

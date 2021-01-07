@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; pDESy 0.3.2 documentation</title>
+  <title>Index &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -209,9 +209,13 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.SimulationMode.BACKWARD">BACKWARD (pDESy.model.base_project.SimulationMode attribute)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject.backward_simulate">backward_simulate() (pDESy.model.base_project.BaseProject method)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent">BaseComponent (class in pDESy.model.base_component)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState">BaseComponentState (class in pDESy.model.base_component)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility">BaseFacility (class in pDESy.model.base_facility)</a>
 </li>
@@ -223,10 +227,10 @@
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct">BaseProduct (class in pDESy.model.base_product)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject">BaseProject (class in pDESy.model.base_project)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject">BaseProject (class in pDESy.model.base_project)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResource">BaseResource (class in pDESy.model.base_resource)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResourceState">BaseResourceState (class in pDESy.model.base_resource)</a>
@@ -240,6 +244,8 @@
       <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam">BaseTeam (class in pDESy.model.base_team)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_worker.BaseWorker">BaseWorker (class in pDESy.model.base_worker)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_worker.BaseWorkerState">BaseWorkerState (class in pDESy.model.base_worker)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow">BaseWorkflow (class in pDESy.model.base_workflow)</a>
 </li>
@@ -255,8 +261,14 @@
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.check_removing_placed_factory">check_removing_placed_factory() (pDESy.model.base_product.BaseProduct method)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.check_state">check_state() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.check_state">check_state() (pDESy.model.base_component.BaseComponent method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.check_state">(pDESy.model.base_product.BaseProduct method)</a>
 </li>
+        <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.check_state">(pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.component.Component">Component (class in pDESy.model.component)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.create_cost_history_plotly">create_cost_history_plotly() (pDESy.model.base_factory.BaseFactory method)</a>
@@ -307,10 +319,14 @@
         <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.create_gantt_plotly">(pDESy.model.base_workflow.BaseWorkflow method)</a>
 </li>
       </ul></li>
-      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.create_simple_gantt">create_simple_gantt() (pDESy.model.base_organization.BaseOrganization method)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.create_simple_gantt">create_simple_gantt() (pDESy.model.base_factory.BaseFactory method)</a>
 
       <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.create_simple_gantt">(pDESy.model.base_organization.BaseOrganization method)</a>
+</li>
         <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.create_simple_gantt">(pDESy.model.base_product.BaseProduct method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.create_simple_gantt">(pDESy.model.base_team.BaseTeam method)</a>
 </li>
         <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.create_simple_gantt">(pDESy.model.base_workflow.BaseWorkflow method)</a>
 </li>
@@ -343,15 +359,17 @@
       </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_facility.dummy_facility">dummy_facility() (in module tests.model.test_base_facility)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.model.html#tests.model.test_base_organization.dummy_organization">dummy_organization() (in module tests.model.test_base_organization)</a>
 
       <ul>
         <li><a href="tests.model.html#tests.model.test_organization.dummy_organization">(in module tests.model.test_organization)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.model.html#tests.model.test_base_project.dummy_place_check">dummy_place_check() (in module tests.model.test_base_project)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_product.dummy_product_for_extracting">dummy_product_for_extracting() (in module tests.model.test_base_product)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_base_project.dummy_project">dummy_project() (in module tests.model.test_base_project)</a>
 
@@ -361,6 +379,12 @@
       </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_project.dummy_project2">dummy_project2() (in module tests.model.test_base_project)</a>
 </li>
+      <li><a href="tests.model.html#tests.model.test_base_factory.dummy_team_for_extracting">dummy_team_for_extracting() (in module tests.model.test_base_factory)</a>
+
+      <ul>
+        <li><a href="tests.model.html#tests.model.test_base_team.dummy_team_for_extracting">(in module tests.model.test_base_team)</a>
+</li>
+      </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_worker.dummy_worker">dummy_worker() (in module tests.model.test_base_worker)</a>
 
       <ul>
@@ -369,18 +393,38 @@
       </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_workflow.dummy_workflow">dummy_workflow() (in module tests.model.test_base_workflow)</a>
 </li>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.dummy_workflow_for_extracting">dummy_workflow_for_extracting() (in module tests.model.test_base_workflow)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.export_dict_json_data">export_dict_json_data() (pDESy.model.base_component.BaseComponent method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility.export_dict_json_data">(pDESy.model.base_facility.BaseFacility method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.export_dict_json_data">(pDESy.model.base_factory.BaseFactory method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.export_dict_json_data">(pDESy.model.base_organization.BaseOrganization method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.export_dict_json_data">(pDESy.model.base_product.BaseProduct method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.export_dict_json_data">(pDESy.model.base_task.BaseTask method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.export_dict_json_data">(pDESy.model.base_team.BaseTeam method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_worker.BaseWorker.export_dict_json_data">(pDESy.model.base_worker.BaseWorker method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.export_dict_json_data">(pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.extend_child_component_list">extend_child_component_list() (pDESy.model.base_component.BaseComponent method)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.extend_input_task_list">extend_input_task_list() (pDESy.model.base_task.BaseTask method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.extend_targeted_task_list">extend_targeted_task_list() (pDESy.model.base_component.BaseComponent method)</a>
 
       <ul>
@@ -389,6 +433,32 @@
         <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.extend_targeted_task_list">(pDESy.model.base_team.BaseTeam method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.extract_finished_component_list">extract_finished_component_list() (pDESy.model.base_product.BaseProduct method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.extract_finished_task_list">extract_finished_task_list() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.extract_free_facility_list">extract_free_facility_list() (pDESy.model.base_factory.BaseFactory method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.extract_free_worker_list">extract_free_worker_list() (pDESy.model.base_team.BaseTeam method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.extract_none_component_list">extract_none_component_list() (pDESy.model.base_product.BaseProduct method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.extract_none_task_list">extract_none_task_list() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.extract_ready_component_list">extract_ready_component_list() (pDESy.model.base_product.BaseProduct method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.extract_ready_task_list">extract_ready_task_list() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.extract_working_component_list">extract_working_component_list() (pDESy.model.base_product.BaseProduct method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.extract_working_facility_list">extract_working_facility_list() (pDESy.model.base_factory.BaseFactory method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.extract_working_task_list">extract_working_task_list() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.extract_working_worker_list">extract_working_worker_list() (pDESy.model.base_team.BaseTeam method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -399,14 +469,22 @@
 </li>
       <li><a href="tests.model.html#tests.model.test_base_workflow.FF_workflow">FF_workflow() (in module tests.model.test_base_workflow)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.FINISHED">FINISHED (pDESy.model.base_task.BaseTaskState attribute)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState.FINISHED">FINISHED (pDESy.model.base_component.BaseComponentState attribute)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.FINISHED">(pDESy.model.base_task.BaseTaskState attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.SimulationMode.FOWARD">FOWARD (pDESy.model.base_project.SimulationMode attribute)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacilityState.FREE">FREE (pDESy.model.base_facility.BaseFacilityState attribute)</a>
 
       <ul>
         <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResourceState.FREE">(pDESy.model.base_resource.BaseResourceState attribute)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_worker.BaseWorkerState.FREE">(pDESy.model.base_worker.BaseWorkerState attribute)</a>
 </li>
       </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskDependency.FS">FS (pDESy.model.base_task.BaseTaskDependency attribute)</a>
@@ -417,6 +495,16 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.get_component_list">get_component_list() (pDESy.model.base_product.BaseProduct method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.get_facility_list">get_facility_list() (pDESy.model.base_factory.BaseFactory method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.get_facility_list">(pDESy.model.base_organization.BaseOrganization method)</a>
+</li>
+      </ul></li>
+      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.get_factory_list">get_factory_list() (pDESy.model.base_organization.BaseOrganization method)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.get_networkx_graph">get_networkx_graph() (pDESy.model.base_organization.BaseOrganization method)</a>
 
       <ul>
@@ -443,12 +531,32 @@
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.get_state_from_record">get_state_from_record() (pDESy.model.base_task.BaseTask method)</a>
 </li>
+      <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.get_task_list">get_task_list() (pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.get_team_list">get_team_list() (pDESy.model.base_organization.BaseOrganization method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.get_time_list_for_gannt_chart">get_time_list_for_gannt_chart() (pDESy.model.base_component.BaseComponent method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility.get_time_list_for_gannt_chart">(pDESy.model.base_facility.BaseFacility method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResource.get_time_list_for_gannt_chart">(pDESy.model.base_resource.BaseResource method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.get_time_list_for_gannt_chart">(pDESy.model.base_task.BaseTask method)</a>
+</li>
+      </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.get_total_workamount_skill">get_total_workamount_skill() (pDESy.model.base_factory.BaseFactory method)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility.get_work_amount_skill_progress">get_work_amount_skill_progress() (pDESy.model.base_facility.BaseFacility method)</a>
 
       <ul>
         <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResource.get_work_amount_skill_progress">(pDESy.model.base_resource.BaseResource method)</a>
+</li>
+      </ul></li>
+      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.get_worker_list">get_worker_list() (pDESy.model.base_organization.BaseOrganization method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.get_worker_list">(pDESy.model.base_team.BaseTeam method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -610,8 +718,14 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.NONE">NONE (pDESy.model.base_task.BaseTaskState attribute)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState.NONE">NONE (pDESy.model.base_component.BaseComponentState attribute)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_project.SimulationMode.NONE">(pDESy.model.base_project.SimulationMode attribute)</a>
 </li>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.NONE">(pDESy.model.base_task.BaseTaskState attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -619,6 +733,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pDESy.model.html#pDESy.model.organization.Organization">Organization (class in pDESy.model.organization)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject.output_simlog">output_simlog() (pDESy.model.base_project.BaseProject method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -795,20 +913,42 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.read_json_data">read_json_data() (pDESy.model.base_organization.BaseOrganization method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.read_json_data">(pDESy.model.base_product.BaseProduct method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.read_json_data">(pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.project.Project.read_pDES_json">read_pDES_json() (pDESy.model.project.Project method)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.project.Project.read_pDESy_web_json">read_pDESy_web_json() (pDESy.model.project.Project method)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.READY">READY (pDESy.model.base_task.BaseTaskState attribute)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject.read_simple_json">read_simple_json() (pDESy.model.base_project.BaseProject method)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.record">record() (pDESy.model.base_organization.BaseOrganization method)</a>
-</li>
-      <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.record_allocated_workers_facilities_id">record_allocated_workers_facilities_id() (pDESy.model.base_task.BaseTask method)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState.READY">READY (pDESy.model.base_component.BaseComponentState attribute)</a>
 
       <ul>
-        <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.record_allocated_workers_facilities_id">(pDESy.model.base_workflow.BaseWorkflow method)</a>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.READY">(pDESy.model.base_task.BaseTaskState attribute)</a>
 </li>
       </ul></li>
+      <li><a href="pDESy.model.html#pDESy.model.base_organization.BaseOrganization.record">record() (pDESy.model.base_organization.BaseOrganization method)</a>
+
+      <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.record">(pDESy.model.base_product.BaseProduct method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.record">(pDESy.model.base_workflow.BaseWorkflow method)</a>
+</li>
+      </ul></li>
+      <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.record_all_facility_state">record_all_facility_state() (pDESy.model.base_factory.BaseFactory method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.record_all_worker_state">record_all_worker_state() (pDESy.model.base_team.BaseTeam method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.record_allocated_workers_facilities_id">record_allocated_workers_facilities_id() (pDESy.model.base_task.BaseTask method)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility.record_assigned_task_id">record_assigned_task_id() (pDESy.model.base_facility.BaseFacility method)</a>
 
       <ul>
@@ -819,17 +959,23 @@
         <li><a href="pDESy.model.html#pDESy.model.base_team.BaseTeam.record_assigned_task_id">(pDESy.model.base_team.BaseTeam method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.record_placed_component_id">record_placed_component_id() (pDESy.model.base_factory.BaseFactory method)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.record_placed_factory_id">record_placed_factory_id() (pDESy.model.base_component.BaseComponent method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponent.record_state">record_state() (pDESy.model.base_component.BaseComponent method)</a>
 
       <ul>
-        <li><a href="pDESy.model.html#pDESy.model.base_product.BaseProduct.record_placed_factory_id">(pDESy.model.base_product.BaseProduct method)</a>
+        <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacility.record_state">(pDESy.model.base_facility.BaseFacility method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResource.record_state">(pDESy.model.base_resource.BaseResource method)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTask.record_state">(pDESy.model.base_task.BaseTask method)</a>
 </li>
       </ul></li>
       <li><a href="pDESy.model.html#pDESy.model.base_factory.BaseFactory.remove_placed_component">remove_placed_component() (pDESy.model.base_factory.BaseFactory method)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState.REMOVED">REMOVED (pDESy.model.base_component.BaseComponentState attribute)</a>
 </li>
       <li><a href="pDESy.model.html#pDESy.model.base_workflow.BaseWorkflow.reverse_dependencies">reverse_dependencies() (pDESy.model.base_workflow.BaseWorkflow method)</a>
 </li>
@@ -859,6 +1005,8 @@
         <li><a href="pDESy.model.html#pDESy.model.project.Project.simulate">(pDESy.model.project.Project method)</a>
 </li>
       </ul></li>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.SimulationMode">SimulationMode (class in pDESy.model.base_project)</a>
+</li>
       <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskDependency.SS">SS (pDESy.model.base_task.BaseTaskDependency attribute)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_base_workflow.SS_workflow">SS_workflow() (in module tests.model.test_base_workflow)</a>
@@ -891,15 +1039,7 @@
         <li><a href="tests.model.html#tests.model.test_workflow.test___check_working">(in module tests.model.test_workflow)</a>
 </li>
       </ul></li>
-      <li><a href="tests.model.html#tests.model.test_base_project.test___is_allocated">test___is_allocated() (in module tests.model.test_base_project)</a>
-
-      <ul>
-        <li><a href="tests.model.html#tests.model.test_project.test___is_allocated">(in module tests.model.test_project)</a>
-</li>
-      </ul></li>
-      <li><a href="tests.model.html#tests.model.test_base_project.test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResource">test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResource() (in module tests.model.test_base_project)</a>
-</li>
-      <li><a href="tests.model.html#tests.model.test_base_project.test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResources">test___perform_and_update_BaseTaskPerformedBySingleBaseTaskBaseResources() (in module tests.model.test_base_project)</a>
+      <li><a href="tests.model.html#tests.model.test_project.test___is_allocated">test___is_allocated() (in module tests.model.test_project)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_project.test___perform_and_update_TaskPerformedBySingleTaskWorker">test___perform_and_update_TaskPerformedBySingleTaskWorker() (in module tests.model.test_project)</a>
 </li>
@@ -1047,10 +1187,14 @@
         <li><a href="tests.model.html#tests.model.test_workflow.test_create_gantt_plotly">(in module tests.model.test_workflow)</a>
 </li>
       </ul></li>
-      <li><a href="tests.model.html#tests.model.test_base_organization.test_create_simple_gantt">test_create_simple_gantt() (in module tests.model.test_base_organization)</a>
+      <li><a href="tests.model.html#tests.model.test_base_factory.test_create_simple_gantt">test_create_simple_gantt() (in module tests.model.test_base_factory)</a>
 
       <ul>
+        <li><a href="tests.model.html#tests.model.test_base_organization.test_create_simple_gantt">(in module tests.model.test_base_organization)</a>
+</li>
         <li><a href="tests.model.html#tests.model.test_base_product.test_create_simple_gantt">(in module tests.model.test_base_product)</a>
+</li>
+        <li><a href="tests.model.html#tests.model.test_base_team.test_create_simple_gantt">(in module tests.model.test_base_team)</a>
 </li>
         <li><a href="tests.model.html#tests.model.test_base_workflow.test_create_simple_gantt">(in module tests.model.test_base_workflow)</a>
 </li>
@@ -1121,6 +1265,36 @@
         <li><a href="tests.model.html#tests.model.test_team.test_extend_targeted_task_list">(in module tests.model.test_team)</a>
 </li>
       </ul></li>
+      <li><a href="tests.model.html#tests.model.test_base_product.test_extract_finished_component_list">test_extract_finished_component_list() (in module tests.model.test_base_product)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.test_extract_finished_task_list">test_extract_finished_task_list() (in module tests.model.test_base_workflow)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_factory.test_extract_free_facility_list">test_extract_free_facility_list() (in module tests.model.test_base_factory)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_team.test_extract_free_worker_list">test_extract_free_worker_list() (in module tests.model.test_base_team)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_product.test_extract_none_component_list">test_extract_none_component_list() (in module tests.model.test_base_product)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.test_extract_none_task_list">test_extract_none_task_list() (in module tests.model.test_base_workflow)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_product.test_extract_ready_component_list">test_extract_ready_component_list() (in module tests.model.test_base_product)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.test_extract_ready_task_list">test_extract_ready_task_list() (in module tests.model.test_base_workflow)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_product.test_extract_working_component_list">test_extract_working_component_list() (in module tests.model.test_base_product)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_factory.test_extract_working_facility_list">test_extract_working_facility_list() (in module tests.model.test_base_factory)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.test_extract_working_task_list">test_extract_working_task_list() (in module tests.model.test_base_workflow)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_team.test_extract_working_worker_list">test_extract_working_worker_list() (in module tests.model.test_base_team)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_product.test_get_component_list">test_get_component_list() (in module tests.model.test_base_product)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_factory.test_get_facility_list">test_get_facility_list() (in module tests.model.test_base_factory)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_organization.test_get_factory_list">test_get_factory_list() (in module tests.model.test_base_organization)</a>
+</li>
       <li><a href="tests.model.html#tests.model.test_base_organization.test_get_networkx_graph">test_get_networkx_graph() (in module tests.model.test_base_organization)</a>
 
       <ul>
@@ -1157,6 +1331,8 @@
         <li><a href="tests.model.html#tests.model.test_workflow.test_get_node_and_edge_trace_for_plotly_network">(in module tests.model.test_workflow)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="tests.model.html#tests.model.test_worker.test_get_quality_skill_point">test_get_quality_skill_point() (in module tests.model.test_worker)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_base_task.test_get_state_from_record">test_get_state_from_record() (in module tests.model.test_base_task)</a>
@@ -1165,8 +1341,10 @@
         <li><a href="tests.model.html#tests.model.test_task.test_get_state_from_record">(in module tests.model.test_task)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="tests.model.html#tests.model.test_base_workflow.test_get_task_list">test_get_task_list() (in module tests.model.test_base_workflow)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_organization.test_get_team_list">test_get_team_list() (in module tests.model.test_base_organization)</a>
+</li>
       <li><a href="tests.model.html#tests.model.test_base_facility.test_get_work_amount_skill_progress">test_get_work_amount_skill_progress() (in module tests.model.test_base_facility)</a>
 
       <ul>
@@ -1175,6 +1353,8 @@
         <li><a href="tests.model.html#tests.model.test_worker.test_get_work_amount_skill_progress">(in module tests.model.test_worker)</a>
 </li>
       </ul></li>
+      <li><a href="tests.model.html#tests.model.test_base_team.test_get_worker_list">test_get_worker_list() (in module tests.model.test_base_team)</a>
+</li>
       <li><a href="tests.model.html#tests.model.test_base_worker.test_has_facility_skill">test_has_facility_skill() (in module tests.model.test_base_worker)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_worker.test_has_quality_skill">test_has_quality_skill() (in module tests.model.test_worker)</a>
@@ -1271,6 +1451,12 @@
       </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_component.test_is_ready">test_is_ready() (in module tests.model.test_base_component)</a>
 </li>
+      <li><a href="tests.model.html#tests.model.test_base_project.test_output_simlog">test_output_simlog() (in module tests.model.test_base_project)</a>
+
+      <ul>
+        <li><a href="tests.model.html#tests.model.test_project.test_output_simlog">(in module tests.model.test_project)</a>
+</li>
+      </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_task.test_perform">test_perform() (in module tests.model.test_base_task)</a>
 
       <ul>
@@ -1300,6 +1486,8 @@
 </li>
       </ul></li>
       <li><a href="tests.model.html#tests.model.test_base_component.test_set_placed_factory">test_set_placed_factory() (in module tests.model.test_base_component)</a>
+</li>
+      <li><a href="tests.model.html#tests.model.test_base_project.test_simple_write_json">test_simple_write_json() (in module tests.model.test_base_project)</a>
 </li>
       <li><a href="tests.model.html#tests.model.test_base_project.test_simulate">test_simulate() (in module tests.model.test_base_project)</a>
 
@@ -1522,17 +1710,23 @@
 </li>
       <li><a href="pDESy.model.html#pDESy.model.workflow.Workflow">Workflow (class in pDESy.model.workflow)</a>
 </li>
-      <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacilityState.WORKING">WORKING (pDESy.model.base_facility.BaseFacilityState attribute)</a>
+      <li><a href="pDESy.model.html#pDESy.model.base_component.BaseComponentState.WORKING">WORKING (pDESy.model.base_component.BaseComponentState attribute)</a>
 
       <ul>
+        <li><a href="pDESy.model.html#pDESy.model.base_facility.BaseFacilityState.WORKING">(pDESy.model.base_facility.BaseFacilityState attribute)</a>
+</li>
         <li><a href="pDESy.model.html#pDESy.model.base_resource.BaseResourceState.WORKING">(pDESy.model.base_resource.BaseResourceState attribute)</a>
 </li>
         <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.WORKING">(pDESy.model.base_task.BaseTaskState attribute)</a>
+</li>
+        <li><a href="pDESy.model.html#pDESy.model.base_worker.BaseWorkerState.WORKING">(pDESy.model.base_worker.BaseWorkerState attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pDESy.model.html#pDESy.model.base_task.BaseTaskState.WORKING_ADDITIONALLY">WORKING_ADDITIONALLY (pDESy.model.base_task.BaseTaskState attribute)</a>
+</li>
+      <li><a href="pDESy.model.html#pDESy.model.base_project.BaseProject.write_simple_json">write_simple_json() (pDESy.model.base_project.BaseProject method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1550,7 +1744,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

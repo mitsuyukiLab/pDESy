@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pDESy.model.base_project &mdash; pDESy 0.3.2 documentation</title>
+  <title>pDESy.model.base_project &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -155,20 +155,32 @@
 <span class="c1"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">plotly.figure_factory</span> <span class="k">as</span> <span class="nn">ff</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">.base_product</span> <span class="kn">import</span> <span class="n">BaseProduct</span>
 <span class="kn">from</span> <span class="nn">.base_component</span> <span class="kn">import</span> <span class="n">BaseComponent</span>
+<span class="kn">from</span> <span class="nn">.base_workflow</span> <span class="kn">import</span> <span class="n">BaseWorkflow</span>
 <span class="kn">from</span> <span class="nn">.base_task</span> <span class="kn">import</span> <span class="n">BaseTask</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="p">,</span> <span class="n">BaseTaskDependency</span>
+<span class="kn">from</span> <span class="nn">.base_organization</span> <span class="kn">import</span> <span class="n">BaseOrganization</span>
 <span class="kn">from</span> <span class="nn">.base_team</span> <span class="kn">import</span> <span class="n">BaseTeam</span>
-<span class="kn">from</span> <span class="nn">.base_worker</span> <span class="kn">import</span> <span class="n">BaseWorker</span>
+<span class="kn">from</span> <span class="nn">.base_worker</span> <span class="kn">import</span> <span class="n">BaseWorker</span><span class="p">,</span> <span class="n">BaseWorkerState</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">.base_resource</span> <span class="kn">import</span> <span class="n">BaseResourceState</span>
 <span class="kn">from</span> <span class="nn">.base_factory</span> <span class="kn">import</span> <span class="n">BaseFactory</span>
 <span class="kn">from</span> <span class="nn">.base_facility</span> <span class="kn">import</span> <span class="n">BaseFacility</span><span class="p">,</span> <span class="n">BaseFacilityState</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="SimulationMode"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.SimulationMode">[docs]</a><span class="k">class</span> <span class="nc">SimulationMode</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;SimulationMode&quot;&quot;&quot;</span>
+
+    <span class="n">NONE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">FOWARD</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">BACKWARD</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="BaseProject"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject">[docs]</a><span class="k">class</span> <span class="nc">BaseProject</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
@@ -203,6 +215,14 @@
 <span class="sd">            Basic variable.</span>
 <span class="sd">            History or record of this project&#39;s cost in simulation.</span>
 <span class="sd">            Defaults to None -&gt; [].</span>
+<span class="sd">        simulation_mode (SimulationMode, optional):</span>
+<span class="sd">            Basic variable.</span>
+<span class="sd">            Simulation mode.</span>
+<span class="sd">            Defaults to None -&gt; SimulationMode.NONE</span>
+<span class="sd">        log_txt (str, optional):</span>
+<span class="sd">            Basic variable.</span>
+<span class="sd">            Log text of simulation.</span>
+<span class="sd">            Default to None -&gt; []</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -217,6 +237,8 @@
         <span class="n">workflow</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">time</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">cost_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">simulation_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">log_txt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 
         <span class="c1"># ----</span>
@@ -260,6 +282,16 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
 
+        <span class="k">if</span> <span class="n">simulation_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">simulation_mode</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">SimulationMode</span><span class="o">.</span><span class="n">NONE</span>
+
+        <span class="k">if</span> <span class="n">log_txt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span> <span class="o">=</span> <span class="n">log_txt</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
@@ -269,22 +301,40 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="p">)</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="BaseProject.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseProject.initialize"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the changeable variables of this BaseProject.</span>
+<span class="sd">        Initialize the following changeable variables of BaseProject.</span>
+<span class="sd">        If `state_info` is True, the following attributes are initialized.</span>
 
-<span class="sd">        - time</span>
-<span class="sd">        - cost_list</span>
-<span class="sd">        - changeable variables of product</span>
-<span class="sd">        - changeable variables of organization</span>
-<span class="sd">        - changeable variables of workflow</span>
+<span class="sd">          - `time`</span>
 
+<span class="sd">        If `log_info` is True, the following attributes are initialized.</span>
+
+<span class="sd">          - `cost_list`</span>
+<span class="sd">          - `simulation_mode`</span>
+<span class="sd">          - `log_txt`</span>
+
+<span class="sd">        BaseProduct in `product`, BaseOrganization in `organization` and BaseWorkflow in `workflow`</span>
+<span class="sd">        are also initialized by this function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_info (bool):</span>
+<span class="sd">                State information are initialized or not.</span>
+<span class="sd">                Defaluts to True.</span>
+<span class="sd">            log_info (bool):</span>
+<span class="sd">                Log information are initialized or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+        <span class="k">if</span> <span class="n">state_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">log_info</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">SimulationMode</span><span class="o">.</span><span class="n">NONE</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">log_info</span><span class="p">)</span></div>
+        <span class="c1"># product should be initialized after initializing workflow</span>
 
 <div class="viewcode-block" id="BaseProject.simulate"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.simulate">[docs]</a>    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -294,6 +344,8 @@
         <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">initialize_state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initialize_log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
         <span class="n">unit_time</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
@@ -305,7 +357,7 @@
 <span class="sd">                Mode of performed task in simulation.</span>
 <span class="sd">                pDESy has the following options of this mode in simulation.</span>
 
-<span class="sd">                - multi-workers</span>
+<span class="sd">                  - multi-workers</span>
 
 <span class="sd">                Defaults to &quot;multi-workers&quot;.</span>
 <span class="sd">            error_tol (float, optional):</span>
@@ -323,6 +375,12 @@
 <span class="sd">            work_finish_hour (int, optional):</span>
 <span class="sd">                Finish working hour in one day .</span>
 <span class="sd">                Defaults to None. This means workers work every time.</span>
+<span class="sd">            initialize_state_info (bool, optional):</span>
+<span class="sd">                Whether initializing state info of this project or not.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">            initialize_log_info (bool, optional):</span>
+<span class="sd">                Whether initializing log info of this project or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">            max_time (int, optional):</span>
 <span class="sd">                Max time of simulation.</span>
 <span class="sd">                Defaults to 10000.</span>
@@ -345,27 +403,34 @@
         <span class="k">if</span> <span class="n">task_performed_mode</span> <span class="o">==</span> <span class="s2">&quot;multi-workers&quot;</span><span class="p">:</span>
             <span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># TaskPerformedBySingleTaskWorkers in pDES</span>
 
-        <span class="c1"># check whether implementation or target mode simulation is finished or not</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Sorry. This simulation mode is not yet implemented.&quot;</span><span class="p">)</span>
+        <span class="c1"># check whether implementation or target mode simulation is finish</span>
+        <span class="c1"># Future Warning</span>
+        <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;`print_debug` mode will be extinguished in the next version. &quot;</span>
+                <span class="s2">&quot;Please use `output_simlog()` function for debugging.&quot;</span><span class="p">,</span>
+                <span class="ne">FutureWarning</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="c1"># -----------------------------------------------------------------------------</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">state_info</span><span class="o">=</span><span class="n">initialize_state_info</span><span class="p">,</span> <span class="n">log_info</span><span class="o">=</span><span class="n">initialize_log_info</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">SimulationMode</span><span class="o">.</span><span class="n">FOWARD</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-
+            <span class="n">log_txt_this_time</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="c1"># 1. Check finished or not</span>
             <span class="n">state_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">task</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">))</span>
             <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span> <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">state_list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__record</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt_this_time</span><span class="p">)</span>
                 <span class="k">return</span>
 
             <span class="c1"># Error check</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="n">max_time</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s2">&quot;Time Over! Please check your simulation model or increase &quot;</span>
-                    <span class="s2">&quot;max_time&quot;</span>
-                    <span class="s2">&quot; value&quot;</span>
-                <span class="p">)</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Time Over! Please check your simulation model or increase max_time value&quot;</span>
+                <span class="n">log_txt_this_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_txt_this_time</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
             <span class="c1"># check now is business time or not</span>
             <span class="n">working</span> <span class="o">=</span> <span class="kc">True</span>
@@ -381,15 +446,18 @@
                     <span class="n">now_date_time</span><span class="p">,</span> <span class="n">weekend_working</span><span class="p">,</span> <span class="n">work_start_hour</span><span class="p">,</span> <span class="n">work_finish_hour</span>
                 <span class="p">)</span>
 
+            <span class="n">log_txt_this_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">now_date_time</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">working</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">now_date_time</span><span class="p">,</span> <span class="n">working</span><span class="p">)</span>
 
-            <span class="c1"># 2. Allocate free resources to READY tasks</span>
+            <span class="c1"># 2. Allocate free workers to READY tasks</span>
             <span class="k">if</span> <span class="n">working</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__allocate_single_task_workers</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__allocate_single_task_workers</span><span class="p">(</span>
+                    <span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt_this_time</span>
+                <span class="p">)</span>
 
-            <span class="c1"># 3. Pay cost to all resources in this time</span>
+            <span class="c1"># 3. Pay cost to all workers and facilities in this time</span>
             <span class="k">if</span> <span class="n">working</span><span class="p">:</span>
                 <span class="n">cost_this_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">add_labor_cost</span><span class="p">(</span><span class="n">only_working</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -401,13 +469,14 @@
             <span class="c1"># 4, Perform</span>
             <span class="k">if</span> <span class="n">working</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">__perform</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">__perform</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt_this_time</span><span class="p">)</span>
 
             <span class="c1"># 5. Record</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__record</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__record</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt_this_time</span><span class="p">)</span>
             <span class="c1"># 6. Update</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__update</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__update</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt_this_time</span><span class="p">)</span>
 
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_txt_this_time</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">unit_time</span></div>
 
 <div class="viewcode-block" id="BaseProject.backward_simulate"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.backward_simulate">[docs]</a>    <span class="k">def</span> <span class="nf">backward_simulate</span><span class="p">(</span>
@@ -418,8 +487,10 @@
         <span class="n">weekend_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">initialize_state_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">initialize_log_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
-        <span class="n">unit_time</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">unit_time</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">considering_due_time_of_tail_tasks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">update_time_information_for_forward</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
@@ -430,10 +501,7 @@
 <span class="sd">            task_performed_mode (str, optional):</span>
 <span class="sd">                Mode of performed task in simulation.</span>
 <span class="sd">                pDESy has the following options of this mode in simulation.</span>
-
-<span class="sd">                - single-worker</span>
 <span class="sd">                - multi-workers</span>
-
 <span class="sd">                Defaults to &quot;multi-workers&quot;.</span>
 <span class="sd">            error_tol (float, optional):</span>
 <span class="sd">                Measures against numerical error.</span>
@@ -450,18 +518,21 @@
 <span class="sd">            work_finish_hour (int, optional):</span>
 <span class="sd">                Finish working hour in one day .</span>
 <span class="sd">                Defaults to None. This means workers work every time.</span>
+<span class="sd">            initialize_state_info (bool, optional):</span>
+<span class="sd">                Whether initializing state info of this project or not.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">            initialize_log_info (bool, optional):</span>
+<span class="sd">                Whether initializing log info of this project or not.</span>
+<span class="sd">                Defaults to True.</span>
 <span class="sd">            max_time (int, optional):</span>
 <span class="sd">                Max time of simulation.</span>
 <span class="sd">                Defaults to 10000.</span>
 <span class="sd">            unit_time (int, optional):</span>
 <span class="sd">                Unit time of simulation.</span>
-<span class="sd">                Defaults to -1.</span>
+<span class="sd">                Defaults to 1.</span>
 <span class="sd">            considering_due_time_of_tail_tasks (bool, optional):</span>
 <span class="sd">                Consider due_time of tail tasks or not.</span>
 <span class="sd">                Default to False.</span>
-<span class="sd">            update_time_information_for_forward (bool, optional):</span>
-<span class="sd">                Update time information for forward simulation after this simulation.</span>
-<span class="sd">                Defaults to True.</span>
 
 <span class="sd">        Note:</span>
 <span class="sd">            This function is only for research and still in progress.</span>
@@ -493,8 +564,6 @@
                         <span class="p">)</span>
                         <span class="n">autotask_removing_after_simulation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">auto_task</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">auto_task</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">autotask_removing_after_simulation</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
                 <span class="n">task_performed_mode</span><span class="o">=</span><span class="n">task_performed_mode</span><span class="p">,</span>
@@ -503,133 +572,62 @@
                 <span class="n">weekend_working</span><span class="o">=</span><span class="n">weekend_working</span><span class="p">,</span>
                 <span class="n">work_start_hour</span><span class="o">=</span><span class="n">work_start_hour</span><span class="p">,</span>
                 <span class="n">work_finish_hour</span><span class="o">=</span><span class="n">work_finish_hour</span><span class="p">,</span>
+                <span class="n">initialize_log_info</span><span class="o">=</span><span class="n">initialize_log_info</span><span class="p">,</span>
+                <span class="n">initialize_state_info</span><span class="o">=</span><span class="n">initialize_state_info</span><span class="p">,</span>
                 <span class="n">max_time</span><span class="o">=</span><span class="n">max_time</span><span class="p">,</span>
                 <span class="n">unit_time</span><span class="o">=</span><span class="n">unit_time</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">update_time_information_for_forward</span><span class="p">:</span>
-                <span class="c1"># Change reverse result to normal result</span>
-                <span class="n">final_step</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span>
-                <span class="k">if</span> <span class="n">considering_due_time_of_tail_tasks</span><span class="p">:</span>
-                    <span class="n">final_step</span> <span class="o">=</span> <span class="n">max_due_time</span>
-
-                <span class="c1"># Task</span>
-                <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
-                    <span class="c1"># Change start_time_list to finish_time_list</span>
-                    <span class="c1"># finish_time_list to start_time_list</span>
-                    <span class="n">tmp</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">finish_time_list</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="n">tmp</span>
-                    <span class="k">del</span> <span class="n">tmp</span>
-
-                    <span class="c1"># add (-final_step) to all time information</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">)</span>
-                    <span class="p">)</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">task</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">)</span>
-                    <span class="p">)</span>
-
-                <span class="c1"># TODO we have to check and update this information</span>
-                <span class="n">min_start_time</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">if</span> <span class="n">considering_due_time_of_tail_tasks</span><span class="p">:</span>
-                    <span class="n">min_start_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
-                        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="n">tmp</span> <span class="o">&lt;</span> <span class="n">min_start_time</span><span class="p">:</span>
-                            <span class="n">min_start_time</span> <span class="o">=</span> <span class="n">tmp</span>
-                <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="n">max_finish_time</span> <span class="o">=</span> <span class="n">min_start_time</span> <span class="o">-</span> <span class="mi">1</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">output_task_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># still reverse in this line..</span>
-                        <span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[]</span>
-                        <span class="k">for</span> <span class="n">output_task</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">output_task_list</span><span class="p">:</span>
-                            <span class="n">finish_time_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_task</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">)</span>
-                        <span class="n">max_finish_time</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">finish_time_list</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="n">task</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">max_finish_time</span><span class="p">]</span>
-
-                <span class="c1"># Team</span>
-                <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">:</span>
-                    <span class="c1"># Worker</span>
-                    <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span><span class="p">:</span>
-                        <span class="c1"># Change start_time_list to finish_time_list</span>
-                        <span class="c1"># finish_time_list to start_time_list</span>
-                        <span class="n">tmp</span> <span class="o">=</span> <span class="n">worker</span><span class="o">.</span><span class="n">start_time_list</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="n">worker</span><span class="o">.</span><span class="n">finish_time_list</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="n">tmp</span>
-                        <span class="k">del</span> <span class="n">tmp</span>
-
-                        <span class="c1"># add (-final_step) to all time information</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                            <span class="nb">map</span><span class="p">(</span>
-                                <span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-                                <span class="n">worker</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">,</span>
-                            <span class="p">)</span>
-                        <span class="p">)</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">start_time_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                            <span class="nb">map</span><span class="p">(</span>
-                                <span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-                                <span class="n">worker</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">,</span>
-                            <span class="p">)</span>
-                        <span class="p">)</span>
-                        <span class="n">worker</span><span class="o">.</span><span class="n">finish_time_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-
-                <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">:</span>
-                    <span class="c1"># Facility</span>
-                    <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
-                        <span class="c1"># Change start_time_list to finish_time_list</span>
-                        <span class="c1"># finish_time_list to start_time_list</span>
-                        <span class="n">tmp</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">start_time_list</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">finish_time_list</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="n">tmp</span>
-                        <span class="k">del</span> <span class="n">tmp</span>
-
-                        <span class="c1"># add (-final_step) to all time information</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                            <span class="nb">map</span><span class="p">(</span>
-                                <span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-                                <span class="n">resource</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">,</span>
-                            <span class="p">)</span>
-                        <span class="p">)</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">start_time_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                            <span class="nb">map</span><span class="p">(</span>
-                                <span class="k">lambda</span> <span class="n">time</span><span class="p">:</span> <span class="n">time</span> <span class="o">+</span> <span class="p">(</span><span class="n">final_step</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
-                                <span class="n">resource</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">,</span>
-                            <span class="p">)</span>
-                        <span class="p">)</span>
-                        <span class="n">resource</span><span class="o">.</span><span class="n">finish_time_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">SimulationMode</span><span class="o">.</span><span class="n">BACKWARD</span>
             <span class="k">for</span> <span class="n">autotask</span> <span class="ow">in</span> <span class="n">autotask_removing_after_simulation</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">task</span><span class="p">,</span> <span class="n">dependency</span> <span class="ow">in</span> <span class="n">autotask</span><span class="o">.</span><span class="n">output_task_list</span><span class="p">:</span>
                     <span class="n">task</span><span class="o">.</span><span class="n">input_task_list</span><span class="o">.</span><span class="n">remove</span><span class="p">([</span><span class="n">autotask</span><span class="p">,</span> <span class="n">dependency</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">autotask</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">reverse_dependencies</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">__perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__perform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="p">[]):</span>
+
+        <span class="n">worker_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">team</span><span class="p">:</span> <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">))</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span>
+                    <span class="nb">map</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">factory</span><span class="p">:</span> <span class="n">factory</span><span class="o">.</span><span class="n">facility_list</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Allocation result in this time&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">worker_list</span><span class="p">:</span>
+            <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">name</span>
+                <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">assigned_task</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">assigned_task</span> <span class="ow">in</span> <span class="n">worker</span><span class="o">.</span><span class="n">assigned_task_list</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">facility</span> <span class="ow">in</span> <span class="n">facility_list</span><span class="p">:</span>
+            <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">facility</span><span class="o">.</span><span class="n">name</span>
+                <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">assigned_task</span><span class="o">.</span><span class="n">name</span>
+                        <span class="k">for</span> <span class="n">assigned_task</span> <span class="ow">in</span> <span class="n">facility</span><span class="o">.</span><span class="n">assigned_task_list</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;PERFORM&quot;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Allocation result in this time&quot;</span><span class="p">)</span>
-            <span class="n">worker_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
-                    <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">team</span><span class="p">:</span> <span class="n">team</span><span class="o">.</span><span class="n">worker_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">)</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-            <span class="n">facility_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-                <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
-                    <span class="nb">list</span><span class="p">(</span>
-                        <span class="nb">map</span><span class="p">(</span>
-                            <span class="k">lambda</span> <span class="n">factory</span><span class="p">:</span> <span class="n">factory</span><span class="o">.</span><span class="n">facility_list</span><span class="p">,</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">,</span>
-                        <span class="p">)</span>
-                    <span class="p">)</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
+
             <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">worker_list</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="n">worker</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -648,24 +646,37 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PERFORM&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">perform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__record</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;RECORD&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECORD&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">record_allocated_workers_facilities_id</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">record_placed_factory_id</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">record</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;UPDATE&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;UPDATE&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_removing_placed_factory</span><span class="p">(</span><span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_state</span><span class="p">()</span>  <span class="c1"># product should be checked after checking workflow state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_removing_placed_factory</span><span class="p">(</span>
+            <span class="n">print_debug</span><span class="o">=</span><span class="n">print_debug</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="n">log_txt</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">update_PERT_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__allocate_single_task_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__allocate_single_task_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">log_txt</span><span class="o">=</span><span class="p">[]):</span>
 
         <span class="c1"># Check free factory before setting components</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ALLOCATE&quot;</span><span class="p">)</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Factory - Component before setting components in this time&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">:</span>
+            <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">factory</span><span class="o">.</span><span class="n">name</span>
+                <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ALLOCATE&quot;</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Factory - Component before setting components in this time&quot;</span><span class="p">)</span>
@@ -673,7 +684,7 @@
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="n">factory</span><span class="o">.</span><span class="n">name</span>
                     <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
-                    <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
+                    <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
                 <span class="p">)</span>
 
         <span class="n">target_factory_id_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">ID</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">]</span>
@@ -682,9 +693,12 @@
         <span class="n">ready_component_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
             <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">is_ready</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">component_list</span><span class="p">)</span>
         <span class="p">)</span>
+
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Ready Component list before allocating&quot;</span><span class="p">)</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ready_component_list</span><span class="p">]))</span>
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ready Component list before allocating&quot;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ready_component_list</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ready_component_list</span><span class="p">]))</span>
 
         <span class="c1"># C. Decide which factory put each ready component</span>
         <span class="c1"># TODO component sorting or task sorting</span>
@@ -711,21 +725,28 @@
                             <span class="n">ready_component</span><span class="o">.</span><span class="n">set_placed_factory</span><span class="p">(</span><span class="n">factory</span><span class="p">)</span>
                             <span class="n">factory</span><span class="o">.</span><span class="n">set_placed_component</span><span class="p">(</span><span class="n">ready_component</span><span class="p">)</span>
                             <span class="k">break</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="k">continue</span>
+                    <span class="c1"># else:</span>
+                    <span class="c1">#     continue</span>
 
         <span class="c1"># Check free factory after setting components</span>
+        <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Factory - Component after setting components in this time&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">:</span>
+            <span class="n">log_txt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">factory</span><span class="o">.</span><span class="n">name</span>
+                <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
+                <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="n">print_debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Factory - Component after setting components in this time&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span>
                     <span class="n">factory</span><span class="o">.</span><span class="n">name</span>
                     <span class="o">+</span> <span class="s2">&quot;:&quot;</span>
-                    <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
+                    <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">factory</span><span class="o">.</span><span class="n">placed_component_list</span><span class="p">])</span>
                 <span class="p">)</span>
         <span class="c1"># ---------------------------------------------------------------</span>
 
-        <span class="c1"># 1. Get ready task and free resources</span>
+        <span class="c1"># 1. Get ready task and free workers and facilities</span>
         <span class="n">ready_and_working_task_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
             <span class="nb">filter</span><span class="p">(</span>
                 <span class="k">lambda</span> <span class="n">task</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span>
@@ -755,20 +776,20 @@
         <span class="p">)</span>
 
         <span class="n">free_worker_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">worker</span><span class="p">:</span> <span class="n">worker</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseResourceState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span> <span class="n">worker_list</span><span class="p">)</span>
+            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">worker</span><span class="p">:</span> <span class="n">worker</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseWorkerState</span><span class="o">.</span><span class="n">FREE</span><span class="p">,</span> <span class="n">worker_list</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="c1"># 2. Sort ready task and free resources</span>
+        <span class="c1"># 2. Sort ready task</span>
         <span class="c1"># Task: TSLACK (a task which Slack time(LS-ES) is lower has high priority)</span>
         <span class="n">ready_and_working_task_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
             <span class="n">ready_and_working_task_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">task</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">lst</span> <span class="o">-</span> <span class="n">task</span><span class="o">.</span><span class="n">est</span>
         <span class="p">)</span>
 
-        <span class="c1"># 3. Allocate ready tasks to free resources</span>
+        <span class="c1"># 3. Allocate ready tasks to free workers and facilities</span>
         <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">ready_and_working_task_list</span><span class="p">:</span>
 
             <span class="c1"># Worker: SSP</span>
-            <span class="c1"># a resource which amount of skillpoint is lower has high priority</span>
+            <span class="c1"># a worker which amount of skillpoint is lower has high priority</span>
             <span class="n">free_worker_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
                 <span class="n">free_worker_list</span><span class="p">,</span>
                 <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">worker</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">worker</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
@@ -797,7 +818,7 @@
                     <span class="p">)</span>
 
                     <span class="c1"># Facility sorting</span>
-                    <span class="c1"># SSP: Resource which amount of point is lower has high priority</span>
+                    <span class="c1"># SSP: a facility which amount of point is lower has high priority</span>
                     <span class="n">free_facility_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
                         <span class="n">free_facility_list</span><span class="p">,</span>
                         <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">facility</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span>
@@ -832,8 +853,9 @@
                         <span class="n">task</span><span class="o">.</span><span class="n">allocated_worker_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
                         <span class="n">free_worker_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
 
-        <span class="c1"># 4. Update state of task newly allocated resources (READY -&gt; WORKING)</span>
+        <span class="c1"># 4. Update state of task newly allocated workers and facilities (READY -&gt; WORKING)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">check_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">check_state</span><span class="p">()</span>  <span class="c1"># product should be checked after checking workflow state</span>
 
     <span class="k">def</span> <span class="nf">__is_allocated_worker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worker</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
         <span class="n">team</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
@@ -1306,7 +1328,7 @@
 <span class="sd">            task_node_trace: task nodes information of plotly network.</span>
 <span class="sd">            auto_task_node_trace: auto task nodes information of plotly network.</span>
 <span class="sd">            team_node_trace: team nodes information of plotly network.</span>
-<span class="sd">            worker_node_trace: resource nodes information of plotly network.</span>
+<span class="sd">            worker_node_trace: worker nodes information of plotly network.</span>
 <span class="sd">            factory_node_trace: Factory Node information of plotly network.</span>
 <span class="sd">            facility_node_trace: Facility Node information of plotly network.</span>
 <span class="sd">            edge_trace: Edge information of plotly network.</span>
@@ -1610,7 +1632,177 @@
                     <span class="s2">&quot;pDESy is only support html and json in saving plotly.&quot;</span>
                 <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">fig</span></div></div>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="BaseProject.output_simlog"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.output_simlog">[docs]</a>    <span class="k">def</span> <span class="nf">output_simlog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create simulation log text file.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str):</span>
+<span class="sd">                File path for saving simulation log.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProject.write_simple_json"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.write_simple_json">[docs]</a>    <span class="k">def</span> <span class="nf">write_simple_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create json file of this project.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str):</span>
+<span class="sd">                File path for saving this project data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pDESy&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">dict_data</span><span class="p">[</span><span class="s2">&quot;pDESy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BaseProject&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;init_datetime&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;unit_timedelta&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unit_timedelta</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()),</span>
+                <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+                <span class="s2">&quot;cost_list&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span><span class="p">,</span>
+                <span class="s2">&quot;simulation_mode&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span><span class="p">),</span>
+                <span class="s2">&quot;log_txt&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">dict_data</span><span class="p">[</span><span class="s2">&quot;pDESy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">export_dict_json_data</span><span class="p">())</span>
+        <span class="n">dict_data</span><span class="p">[</span><span class="s2">&quot;pDESy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">export_dict_json_data</span><span class="p">())</span>
+        <span class="n">dict_data</span><span class="p">[</span><span class="s2">&quot;pDESy&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">export_dict_json_data</span><span class="p">())</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">dict_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="n">indent</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProject.read_simple_json"><a class="viewcode-back" href="../../../pDESy.model.html#pDESy.model.base_project.BaseProject.read_simple_json">[docs]</a>    <span class="k">def</span> <span class="nf">read_simple_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read json file which is created by BaseProject.write_simple_json().</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path (str):</span>
+<span class="sd">                File path for reading this project data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pdes_json</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pdes_json</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;pDESy&quot;</span><span class="p">]</span>
+        <span class="n">project_json</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BaseProject&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+            <span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;init_datetime&quot;</span><span class="p">],</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit_timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span>
+            <span class="n">seconds</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;unit_timedelta&quot;</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;cost_list&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulation_mode</span> <span class="o">=</span> <span class="n">SimulationMode</span><span class="p">(</span><span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;simulation_mode&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_txt</span> <span class="o">=</span> <span class="n">project_json</span><span class="p">[</span><span class="s2">&quot;log_txt&quot;</span><span class="p">]</span>
+        <span class="c1"># 1. read all node and attr only considering ID info</span>
+        <span class="c1"># product</span>
+        <span class="n">product_json</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BaseProduct&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">BaseProduct</span><span class="p">(</span><span class="n">component_list</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">product</span><span class="o">.</span><span class="n">read_json_data</span><span class="p">(</span><span class="n">product_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">product</span> <span class="o">=</span> <span class="n">product</span>
+        <span class="c1"># workflow</span>
+        <span class="n">workflow_json</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BaseWorkflow&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">))[</span>
+            <span class="mi">0</span>
+        <span class="p">]</span>
+        <span class="n">workflow</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">(</span><span class="n">task_list</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">workflow</span><span class="o">.</span><span class="n">read_json_data</span><span class="p">(</span><span class="n">workflow_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span> <span class="o">=</span> <span class="n">workflow</span>
+        <span class="c1"># organization</span>
+        <span class="n">organization_json</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BaseOrganization&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">organization</span> <span class="o">=</span> <span class="n">BaseOrganization</span><span class="p">(</span><span class="n">team_list</span><span class="o">=</span><span class="p">[],</span> <span class="n">factory_list</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">organization</span><span class="o">.</span><span class="n">read_json_data</span><span class="p">(</span><span class="n">organization_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">organization</span> <span class="o">=</span> <span class="n">organization</span>
+
+        <span class="c1"># 2. update ID info to instance info</span>
+        <span class="c1"># 2-1. component</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">component_list</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">parent_component_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">get_component_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">parent_component_list</span>
+            <span class="p">]</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">child_component_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">get_component_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">child_component_list</span>
+            <span class="p">]</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">targeted_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">targeted_task_list</span>
+            <span class="p">]</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_factory_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">placed_factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+        <span class="c1"># 2-2. task</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">input_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">BaseTaskDependency</span><span class="p">(</span><span class="n">dependency_number</span><span class="p">),</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">dependency_number</span><span class="p">)</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">input_task_list</span>
+            <span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">output_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">BaseTaskDependency</span><span class="p">(</span><span class="n">dependency_number</span><span class="p">),</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">ID</span><span class="p">,</span> <span class="n">dependency_number</span><span class="p">)</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">output_task_list</span>
+            <span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">allocated_team_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_team_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">allocated_team_list</span>
+            <span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">allocated_factory_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_factory_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">allocated_factory_list</span>
+            <span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">target_component</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">get_component_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">t</span><span class="o">.</span><span class="n">target_component</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">target_component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">allocated_worker_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_worker_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">allocated_worker_list</span>
+            <span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">allocated_facility_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_facility_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">allocated_facility_list</span>
+            <span class="p">]</span>
+        <span class="c1"># 2-3. organziation</span>
+        <span class="c1"># 2-3-1. team</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">team_list</span><span class="p">:</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">targeted_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">targeted_task_list</span>
+            <span class="p">]</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">parent_team</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_team_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">parent_team</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">parent_team</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">worker_list</span><span class="p">:</span>
+                <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span>
+                <span class="p">]</span>
+
+        <span class="c1"># 2-3-2. factory</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">factory_list</span><span class="p">:</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">targeted_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">targeted_task_list</span>
+            <span class="p">]</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">parent_factory</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">organization</span><span class="o">.</span><span class="n">get_factory_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">parent_factory</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">parent_factory</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">placed_component_list</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">get_component_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">placed_component_list</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">facility_list</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span><span class="n">ID</span><span class="o">=</span><span class="n">ID</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ID</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">assigned_task_list</span>
+                <span class="p">]</span></div></div>
 
     <span class="c1"># ---</span>
     <span class="c1"># READ FUNCTION</span>
@@ -1699,7 +1891,7 @@
     <span class="c1">#             #             worker_data[&quot;QualitySkill&quot;][&quot;-name&quot;]</span>
     <span class="c1">#             #         ] = float(worker_data[&quot;QualitySkill&quot;][&quot;-value&quot;])</span>
     <span class="c1">#             worker_list.append(</span>
-    <span class="c1">#                 BaseResource(</span>
+    <span class="c1">#                 BaseWorker(</span>
     <span class="c1">#                     worker_data[&quot;Name&quot;],</span>
     <span class="c1">#                     team_id=team_data[&quot;id&quot;],</span>
     <span class="c1">#                     cost_per_time=float(worker_data[&quot;Cost&quot;]),</span>
@@ -1830,7 +2022,7 @@
     <span class="c1">#             #             worker_data[&quot;QualitySkill&quot;][&quot;-name&quot;]</span>
     <span class="c1">#             #         ] = float(worker_data[&quot;QualitySkill&quot;][&quot;-value&quot;])</span>
     <span class="c1">#             worker_list.append(</span>
-    <span class="c1">#                 BaseResource(</span>
+    <span class="c1">#                 BaseWorker(</span>
     <span class="c1">#                     worker_data[&quot;Name&quot;],</span>
     <span class="c1">#                     team_id=team_data[&quot;-id&quot;],</span>
     <span class="c1">#                     cost_per_time=float(worker_data[&quot;Cost&quot;]),</span>
@@ -1893,7 +2085,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

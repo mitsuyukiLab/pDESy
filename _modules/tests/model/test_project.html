@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_project &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_project &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -242,7 +242,8 @@
         <span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;tests/sample_converted_from_pDES_by_utilities-online.json&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
 
@@ -261,7 +262,8 @@
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">read_pDESy_web_json</span><span class="p">(</span><span class="s2">&quot;tests/sample_from_pDESy_web.json&quot;</span><span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
 
@@ -273,7 +275,8 @@
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">read_pDES_json</span><span class="p">(</span><span class="s2">&quot;tests/sample_converted_from_pDES_by_utilities-online.json&quot;</span><span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">()</span></div>
 
@@ -344,7 +347,6 @@
     <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
         <span class="n">max_time</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
         <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">weekend_working</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">dummy_project</span><span class="o">.</span><span class="n">create_gantt_plotly</span><span class="p">(</span><span class="n">save_fig_path</span><span class="o">=</span><span class="s2">&quot;test.png&quot;</span><span class="p">)</span>
@@ -382,25 +384,27 @@
         <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
         <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
         <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
-        <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="c1"># mode=1 -&gt; Error (not yet implemented)</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># mode=?? -&gt; Error</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;xxxx&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;xxxx&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="c1"># time is over max_time</span>
     <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
         <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
-            <span class="n">max_time</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span> <span class="n">print_debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">max_time</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;single-worker&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
@@ -417,6 +421,18 @@
 <div class="viewcode-block" id="test___perform_and_update_TaskPerformedBySingleTaskWorkers"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test___perform_and_update_TaskPerformedBySingleTaskWorkers">[docs]</a><span class="k">def</span> <span class="nf">test___perform_and_update_TaskPerformedBySingleTaskWorkers</span><span class="p">():</span>
     <span class="c1"># this method is tested in other test code..</span>
     <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="test_output_simlog"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_project.test_output_simlog">[docs]</a><span class="k">def</span> <span class="nf">test_output_simlog</span><span class="p">(</span><span class="n">dummy_project</span><span class="p">):</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span>
+        <span class="n">max_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">task_performed_mode</span><span class="o">=</span><span class="s2">&quot;multi-workers&quot;</span><span class="p">,</span>
+        <span class="n">work_start_hour</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">work_finish_hour</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">dummy_project</span><span class="o">.</span><span class="n">output_simlog</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;test.txt&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -430,7 +446,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

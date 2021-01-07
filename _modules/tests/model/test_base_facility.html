@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_base_facility &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_base_facility &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -179,16 +179,13 @@
     <span class="c1"># assert dummy_facility.quality_skill_mean_map == {}</span>
     <span class="k">assert</span> <span class="n">dummy_facility</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">FREE</span>
     <span class="k">assert</span> <span class="n">dummy_facility</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">dummy_facility</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">dummy_facility</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="k">assert</span> <span class="n">dummy_facility</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseFacility</span><span class="p">(</span>
         <span class="s2">&quot;w1&quot;</span><span class="p">,</span>
         <span class="n">solo_working</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">state</span><span class="o">=</span><span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
         <span class="n">cost_list</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
-        <span class="n">start_time_list</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-        <span class="n">finish_time_list</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">state_record_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span>
         <span class="n">assigned_task_list</span><span class="o">=</span><span class="p">[</span><span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">)],</span>
         <span class="n">assigned_task_id_record</span><span class="o">=</span><span class="p">[[],</span> <span class="p">[</span><span class="s2">&quot;ss&quot;</span><span class="p">]],</span>
     <span class="p">)</span>
@@ -201,8 +198,6 @@
     <span class="c1"># assert w.quality_skill_mean_map == {}</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">WORKING</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;task&quot;</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_id_record</span> <span class="o">==</span> <span class="p">[[],</span> <span class="p">[</span><span class="s2">&quot;ss&quot;</span><span class="p">]]</span></div>
 
@@ -216,14 +211,10 @@
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseFacility</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="n">factory_id</span><span class="o">=</span><span class="n">team</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span>
     <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">WORKING</span>
     <span class="n">w</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">]</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">w</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">)]</span>
     <span class="n">w</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">BaseFacilityState</span><span class="o">.</span><span class="n">FREE</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">cost_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">==</span> <span class="p">[]</span>
-    <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">==</span> <span class="p">[]</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">assigned_task_list</span> <span class="o">==</span> <span class="p">[]</span></div>
 
 
@@ -275,9 +266,6 @@
 
 <div class="viewcode-block" id="test_has_workamount_skill"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_facility.test_has_workamount_skill">[docs]</a><span class="k">def</span> <span class="nf">test_has_workamount_skill</span><span class="p">():</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseFacility</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="s2">&quot;----&quot;</span><span class="p">)</span>
-    <span class="c1"># w.set_workamount_skill_mean_map(</span>
-    <span class="c1">#     {&quot;task1&quot;: 1.0, &quot;task2&quot;: 0.0}, update_other_skill_info=True</span>
-    <span class="c1"># )</span>
     <span class="n">w</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task1&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;task2&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">has_workamount_skill</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="ow">not</span> <span class="n">w</span><span class="o">.</span><span class="n">has_workamount_skill</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
@@ -297,9 +285,6 @@
 
 <div class="viewcode-block" id="test_get_work_amount_skill_progress"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_facility.test_get_work_amount_skill_progress">[docs]</a><span class="k">def</span> <span class="nf">test_get_work_amount_skill_progress</span><span class="p">():</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseFacility</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">,</span> <span class="s2">&quot;----&quot;</span><span class="p">)</span>
-    <span class="c1"># w.set_workamount_skill_mean_map(</span>
-    <span class="c1">#     {&quot;task1&quot;: 1.0, &quot;task2&quot;: 0.0}, update_other_skill_info=True</span>
-    <span class="c1"># )</span>
     <span class="n">w</span><span class="o">.</span><span class="n">workamount_skill_mean_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task1&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;task2&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">get_work_amount_skill_progress</span><span class="p">(</span><span class="s2">&quot;task3&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">get_work_amount_skill_progress</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span>
@@ -380,7 +365,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>

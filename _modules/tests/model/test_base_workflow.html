@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tests.model.test_base_workflow &mdash; pDESy 0.3.2 documentation</title>
+  <title>tests.model.test_base_workflow &mdash; pDESy 0.3.4 documentation</title>
   
 
   
@@ -305,13 +305,7 @@
 
 <div class="viewcode-block" id="test_init"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_init">[docs]</a><span class="k">def</span> <span class="nf">test_init</span><span class="p">():</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
     <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">task_list</span> <span class="o">==</span> <span class="p">[</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">]</span>
@@ -320,6 +314,112 @@
 
 <div class="viewcode-block" id="test_str"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_str">[docs]</a><span class="k">def</span> <span class="nf">test_str</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">BaseWorkflow</span><span class="p">([]))</span></div>
+
+
+<div class="viewcode-block" id="dummy_workflow_for_extracting"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.dummy_workflow_for_extracting">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span> <span class="nf">dummy_workflow_for_extracting</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;function&quot;</span><span class="p">):</span>
+    <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">task3</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task3&quot;</span><span class="p">)</span>
+    <span class="n">task3</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">task4</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task4&quot;</span><span class="p">)</span>
+    <span class="n">task4</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">task5</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task5&quot;</span><span class="p">)</span>
+    <span class="n">task5</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">,</span> <span class="n">task3</span><span class="p">,</span> <span class="n">task4</span><span class="p">,</span> <span class="n">task5</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_extract_none_task_list"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_extract_none_task_list">[docs]</a><span class="k">def</span> <span class="nf">test_extract_none_task_list</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_none_task_list</span><span class="p">([</span><span class="mi">5</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_none_task_list</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_none_task_list</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_none_task_list</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="test_extract_ready_task_list"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_extract_ready_task_list">[docs]</a><span class="k">def</span> <span class="nf">test_extract_ready_task_list</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_ready_task_list</span><span class="p">([</span><span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_ready_task_list</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_ready_task_list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_extract_working_task_list"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_extract_working_task_list">[docs]</a><span class="k">def</span> <span class="nf">test_extract_working_task_list</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_working_task_list</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_working_task_list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_working_task_list</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_extract_finished_task_list"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_extract_finished_task_list">[docs]</a><span class="k">def</span> <span class="nf">test_extract_finished_task_list</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_finished_task_list</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_finished_task_list</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dummy_workflow_for_extracting</span><span class="o">.</span><span class="n">extract_finished_task_list</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="test_get_task_list"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_get_task_list">[docs]</a><span class="k">def</span> <span class="nf">test_get_task_list</span><span class="p">(</span><span class="n">dummy_workflow</span><span class="p">):</span>
+    <span class="c1"># TODO if we have enough time for setting test case...</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span>
+            <span class="n">dummy_workflow</span><span class="o">.</span><span class="n">get_task_list</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="n">ID</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="n">default_work_amount</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">input_task_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">output_task_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">allocated_team_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">allocated_factory_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">need_facility</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">target_component</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="n">default_progress</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
+                <span class="n">due_time</span><span class="o">=</span><span class="mi">99</span><span class="p">,</span>
+                <span class="n">auto_task</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">fixing_allocating_worker_id_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">fixing_allocating_facility_id_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="c1"># search param</span>
+                <span class="n">est</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">eft</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="n">lst</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                <span class="n">lft</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">remaining_work_amount</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span>
+                <span class="n">state</span><span class="o">=</span><span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+                <span class="n">allocated_worker_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">allocated_worker_id_record</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">allocated_facility_list</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">allocated_facility_id_record</span><span class="o">=</span><span class="p">[],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="o">==</span> <span class="mi">0</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_initialize"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_initialize">[docs]</a><span class="k">def</span> <span class="nf">test_initialize</span><span class="p">():</span>
@@ -331,9 +431,6 @@
     <span class="n">task</span><span class="o">.</span><span class="n">remaining_work_amount</span> <span class="o">=</span> <span class="mi">7</span>
     <span class="n">task</span><span class="o">.</span><span class="n">actual_work_amount</span> <span class="o">=</span> <span class="mi">6</span>
     <span class="n">task</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span>
-    <span class="n">task</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">task</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">]</span>
     <span class="n">task</span><span class="o">.</span><span class="n">additional_task_flag</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">task</span><span class="o">.</span><span class="n">allocated_worker_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">BaseWorker</span><span class="p">(</span><span class="s2">&quot;w1&quot;</span><span class="p">)]</span>
 
@@ -559,18 +656,32 @@
 
 <div class="viewcode-block" id="test_create_simple_gantt"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_create_simple_gantt">[docs]</a><span class="k">def</span> <span class="nf">test_create_simple_gantt</span><span class="p">():</span>
     <span class="n">task0</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">auto_task</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">task0</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task0</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task0</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task0</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">,</span> <span class="n">task0</span><span class="p">])</span>
     <span class="n">w</span><span class="o">.</span><span class="n">create_simple_gantt</span><span class="p">(</span><span class="n">finish_margin</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">view_auto_task</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">view_ready</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">]:</span>
@@ -579,62 +690,52 @@
             <span class="n">view_ready</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">view_auto_task</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_fig_path</span><span class="o">=</span><span class="n">save_fig_path</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span></div>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">save_fig_path</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">create_simple_gantt</span><span class="p">(</span><span class="n">target_start_time</span><span class="o">=</span><span class="mi">999</span><span class="p">)</span>  <span class="c1"># Warning</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">create_simple_gantt</span><span class="p">(</span><span class="n">target_finish_time</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Warning</span></div>
 
 
 <div class="viewcode-block" id="test_create_data_for_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_create_data_for_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_data_for_gantt_plotly</span><span class="p">():</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">timedelta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">view_ready</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s2">&quot;Start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s2">&quot;Finish&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span>
-        <span class="n">init_datetime</span> <span class="o">+</span> <span class="p">(</span><span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">timedelta</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s2">&quot;Type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Task&quot;</span></div>
+    <span class="n">w</span><span class="o">.</span><span class="n">create_data_for_gantt_plotly</span><span class="p">(</span><span class="n">init_datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">view_ready</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="test_create_gantt_plotly"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_create_gantt_plotly">[docs]</a><span class="k">def</span> <span class="nf">test_create_gantt_plotly</span><span class="p">():</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
     <span class="n">init_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -648,13 +749,21 @@
 
 <div class="viewcode-block" id="test_get_networkx_graph"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_get_networkx_graph">[docs]</a><span class="k">def</span> <span class="nf">test_get_networkx_graph</span><span class="p">():</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
     <span class="n">w</span><span class="o">.</span><span class="n">get_networkx_graph</span><span class="p">()</span></div>
@@ -665,13 +774,21 @@
 <div class="viewcode-block" id="test_draw_networkx"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_draw_networkx">[docs]</a><span class="k">def</span> <span class="nf">test_draw_networkx</span><span class="p">():</span>
     <span class="n">task0</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">auto_task</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">,</span> <span class="n">task0</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">]:</span>
@@ -683,13 +800,21 @@
 
 <div class="viewcode-block" id="test_get_node_and_edge_trace_for_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_get_node_and_edge_trace_for_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_get_node_and_edge_trace_for_plotly_network</span><span class="p">():</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">])</span>
     <span class="p">(</span>
@@ -711,13 +836,21 @@
 <div class="viewcode-block" id="test_draw_plotly_network"><a class="viewcode-back" href="../../../tests.model.html#tests.model.test_base_workflow.test_draw_plotly_network">[docs]</a><span class="k">def</span> <span class="nf">test_draw_plotly_network</span><span class="p">():</span>
     <span class="n">task0</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">auto_task</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">task1</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task1&quot;</span><span class="p">)</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">task1</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">task1</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span> <span class="o">=</span> <span class="n">BaseTask</span><span class="p">(</span><span class="s2">&quot;task2&quot;</span><span class="p">)</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">start_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">ready_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-    <span class="n">task2</span><span class="o">.</span><span class="n">finish_time_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">task2</span><span class="o">.</span><span class="n">state_record_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">READY</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">WORKING</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+        <span class="n">BaseTaskState</span><span class="o">.</span><span class="n">FINISHED</span><span class="p">,</span>
+    <span class="p">]</span>
     <span class="n">task2</span><span class="o">.</span><span class="n">append_input_task</span><span class="p">(</span><span class="n">task1</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">BaseWorkflow</span><span class="p">([</span><span class="n">task1</span><span class="p">,</span> <span class="n">task2</span><span class="p">,</span> <span class="n">task0</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">]:</span>
@@ -738,7 +871,7 @@
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2020, Taiga MITSUYUKI
+        &copy; Copyright 2021, Taiga MITSUYUKI
 
     </p>
   </div>
